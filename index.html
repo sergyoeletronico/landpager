@@ -3,637 +3,150 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mini Curso RealDash - Transforme seu carro com painéis digitais</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            scroll-behavior: smooth;
-        }
-        
-        .gradient-bg {
-            background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
-        }
-        
-        .cta-button {
-            background: linear-gradient(90deg, #f59e0b 0%, #f97316 100%);
-            transition: all 0.3s ease;
-        }
-        
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(245, 158, 11, 0.3);
-        }
-        
-        .feature-card {
-            transition: all 0.3s ease;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .faq-item {
-            transition: all 0.3s ease;
-        }
-        
-        .dashboard-icon {
-            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
-        }
-        
-        .section-divider {
-            height: 5px;
-            background: linear-gradient(90deg, #1e40af, #3b82f6, #1e40af);
-            border-radius: 5px;
-            width: 100px;
-            margin: 0 auto;
-        }
-        
-        .testimonial-card {
-            transition: all 0.3s ease;
-        }
-        
-        .testimonial-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-        }
-        
-        .bullet-point {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-        
-        .bullet-point svg {
-            flex-shrink: 0;
-            margin-right: 1rem;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mini Curso RealDash - Transforme seu carro</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      scroll-behavior: smooth;
+    }
+    .cta-button {
+      background: linear-gradient(90deg, #f59e0b 0%, #f97316 100%);
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+    .cta-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 12px 30px rgba(245, 158, 11, 0.5);
+    }
+    .card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+    }
+    .section-divider {
+      height: 4px;
+      background: linear-gradient(90deg, #1e40af, #3b82f6);
+      border-radius: 9999px;
+      width: 100px;
+      margin: 0 auto;
+    }
+    iframe {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 16 / 9;
+      border: none;
+    }
+  </style>
+
+  <!-- Pixel do Facebook -->
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', 'SEU_PIXEL_ID_AQUI');
+    fbq('track', 'PageView');
+  </script>
+  <noscript>
+    <img height="1" width="1" style="display:none" 
+         src="https://www.facebook.com/tr?id=SEU_PIXEL_ID_AQUI&ev=PageView&noscript=1"/>
+  </noscript>
 </head>
-<body class="bg-gray-50">
-    <!-- Hero Section -->
-    <header class="gradient-bg text-white">
-        <div class="container mx-auto px-4 py-16 md:py-24">
-            <div class="flex flex-col md:flex-row items-center">
-                <div class="md:w-1/2 mb-10 md:mb-0">
-                    <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-6">
-                        Desenvolva equipamentos microprocessado para seu seu carro - mesmo que você nunca tenha programado antes
-                    </h1>
-                    <p class="text-lg md:text-xl mb-8 text-blue-100">
-                        De um novo visual no seu carro. Aprenda passo a passo como instalar um RPM digital, medir temperatura do motor usando o Arduino - e surpreenda seus amigos e seguidores.
-                    </p>
-                    <a href="#cta" class="cta-button inline-block px-8 py-4 rounded-lg font-bold text-white text-lg shadow-lg">
-                        Quero meu painel digital
-                    </a>
-                </div>
-                <div class="md:w-1/2 flex justify-center">
-                    <div class="relative w-full max-w-lg rounded-lg overflow-hidden shadow-2xl border-4 border-white">
-                        <!-- Placeholder for video/image -->
-                        <div class="bg-gray-800 aspect-video flex items-center justify-center">
-                           <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/Cj8BPTqy5y0?si=Y5iCdj-G9CW19fx1&amp;start=9" 
-						   title="YouTube video player" frameborder="0" 
-                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                           referrerpolicy="strict-origin-when-cross-origin" 
-                           allowfullscreen>
-						  </iframe>
-                        </div>
-                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
-                            <p class="text-white font-medium">Veja o painel digital em funcionamento</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<body class="bg-gray-50 text-gray-800">
+  <header class="bg-gradient-to-r from-blue-800 to-blue-600 text-white py-12 px-4">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-10">
+      <div class="flex-1">
+        <h1 class="text-3xl md:text-5xl font-extrabold mb-6 leading-tight">Desenvolva equipamentos microprocessados para seu carro — mesmo que você nunca tenha programado antes</h1>
+        <p class="text-lg md:text-xl text-blue-100 mb-6">Dê um novo visual ao seu carro! Aprenda passo a passo como instalar um RPM digital, medir temperatura do motor usando Arduino — e surpreenda seus amigos.</p>
+        <a href="#cta" class="cta-button px-6 py-4 rounded-xl font-bold text-lg inline-block">Quero meu painel digital</a>
+      </div>
+      <div class="flex-1">
+        <div class="rounded-xl overflow-hidden shadow-lg border-4 border-white">
+          <iframe src="https://www.youtube-nocookie.com/embed/Cj8BPTqy5y0?start=9" allowfullscreen title="Painel Digital"></iframe>
         </div>
-        <svg class="w-full h-16 text-gray-50 block" viewBox="0 0 1200 120" preserveAspectRatio="none">
-            <path fill="currentColor" d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"></path>
-        </svg>
-    </header>
+      </div>
+    </div>
+  </header>
 
-    <!-- O que você vai aprender -->
-    <section id="aprender" class="py-16 md:py-24">
-        <div class="container mx-auto px-4">
-            <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-4">O que você vai aprender</h2>
-            <div class="section-divider mb-12"></div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Item 1 -->
-                <div class="feature-card bg-white p-6 rounded-xl shadow-lg">
-                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-6">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-3">Instalar e configurar o Arduino</h3>
-                    <p class="text-gray-600">Aprenda a conectar o Arduino ao seu veículo e configurá-lo para capturar dados em tempo real, mesmo sem experiência prévia.</p>
-                </div>
-                
-                <!-- Item 2 -->
-                <div class="feature-card bg-white p-6 rounded-xl shadow-lg">
-                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-6">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-3">Criar módulos de display visuais</h3>
-                    <p class="text-gray-600">Uso de displays para interfaces personalizadas e impressionantes para o seu veículo.</p>
-                </div>
-                
-                <!-- Item 3 -->
-                <div class="feature-card bg-white p-6 rounded-xl shadow-lg">
-                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-6">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-3">Leitura de dados em tempo real</h3>
-                    <p class="text-gray-600">Monitore RPM, temperatura, velocidade, tensão da bateria e outros dados importantes do seu veículo.</p>
-                </div>
-                
-                <!-- Item 4 -->
-                <div class="feature-card bg-white p-6 rounded-xl shadow-lg">
-                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-6">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-3">Adaptação para diferentes veículos</h3>
-                    <p class="text-gray-600">Domine as técnicas para adaptar o projeto a diferentes modelos e marcas de carros com pequenos ajustes.</p>
-                </div>
-                
-                <!-- Item 5 -->
-                <div class="feature-card bg-white p-6 rounded-xl shadow-lg">
-                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-6">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-3">Computador de bordo do zero</h3>
-                    <p class="text-gray-600">Crie seu próprio computador de bordo personalizado com todas as funções que você sempre quis ter no seu carro.</p>
-                </div>
-                
-                <!-- Item 6 -->
-                <div class="feature-card bg-gradient-to-br from-amber-50 to-amber-100 p-6 rounded-xl shadow-lg border-2 border-amber-300">
-                    <div class="w-16 h-16 bg-amber-200 rounded-full flex items-center justify-center mb-6">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-3">Transforme em fonte de renda</h3>
-                    <p class="text-gray-700">Aprenda como usar esse conhecimento para ganhar dinheiro oferecendo serviços de instalação ou vendendo painéis personalizados.</p>
-                    <div class="mt-4 inline-block px-4 py-2 bg-amber-500 text-white rounded-lg font-medium">Destaque Especial</div>
-                </div>
-            </div>
+  <section class="py-16 bg-red-50 text-gray-900 px-4">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-3xl font-bold mb-6">🚨 Você se identifica com isso?</h2>
+      <p class="text-lg mb-8">Muita gente que ama carro já passou por isso:</p>
+      <ul class="text-left space-y-4 text-lg">
+        <li>❌ Já tentou seguir um tutorial no YouTube e não conseguiu concluir.</li>
+        <li>❌ Tem medo de queimar algo no carro mexendo com fios e sensores.</li>
+        <li>❌ Sempre quis fazer um painel moderno, mas achava que era “coisa de engenheiro”.</li>
+        <li>❌ Perdeu horas pesquisando e nunca encontrou um passo a passo claro.</li>
+        <li>❌ Desistiu porque não sabia por onde começar ou o que comprar.</li>
+      </ul>
+      <p class="mt-8 text-xl font-semibold">Se você respondeu “sim” para qualquer uma dessas situações…<br><span class="text-red-600 font-bold">este mini curso é exatamente o que você precisa!</span></p>
+    </div>
+  </section>
+
+  <section class="py-16 px-4">
+    <div class="max-w-6xl mx-auto text-center">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">O que você vai aprender</h2>
+      <div class="section-divider mb-10"></div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-left">
+        <div class="card bg-white p-6 rounded-xl shadow">
+          <h3 class="text-xl font-bold mb-2">Instalar e configurar o Arduino</h3>
+          <p>Conecte o Arduino ao carro e comece a capturar dados em tempo real, mesmo sem experiência.</p>
         </div>
-    </section>
-
-    <!-- Funciona com outros carros? -->
-    <section class="py-16 bg-gray-100">
-        <div class="container mx-auto px-4">
-            <div class="max-w-3xl mx-auto text-center">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Funciona com outros carros?</h2>
-                <div class="section-divider mb-8"></div>
-                
-                <div class="bg-white p-8 rounded-xl shadow-lg">
-                    <div class="flex justify-center mb-6">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                    </div>
-                    <p class="text-lg text-gray-700 mb-6">
-                        <span class="font-bold">Sim!</span> Este projeto foi desenvolvido e testado com o Fiat Uno 2008, mas a mesma tecnologia pode ser adaptada para diversos modelos, com pequenos ajustes. Você terá acesso a uma comunidade para tirar dúvidas e adaptar conforme seu carro ou projeto.
-                    </p>
-                    
-                    <div class="flex flex-wrap justify-center gap-4">
-                        <div class="bg-blue-50 px-4 py-2 rounded-full text-blue-700 font-medium">Fiat Uno</div>
-                        <div class="bg-blue-50 px-4 py-2 rounded-full text-blue-700 font-medium">Volkswagen Gol</div>
-                        <div class="bg-blue-50 px-4 py-2 rounded-full text-blue-700 font-medium">Chevrolet Corsa</div>
-                        <div class="bg-blue-50 px-4 py-2 rounded-full text-blue-700 font-medium">Ford Ka</div>
-                        <div class="bg-blue-50 px-4 py-2 rounded-full text-blue-700 font-medium">E muitos outros!</div>
-                    </div>
-                </div>
-            </div>
+        <div class="card bg-white p-6 rounded-xl shadow">
+          <h3 class="text-xl font-bold mb-2">Criar módulos visuais</h3>
+          <p>Use displays para criar interfaces modernas e funcionais no painel.</p>
         </div>
-    </section>
-
-    <!-- Para quem é esse curso -->
-    <section class="py-16 md:py-24">
-        <div class="container mx-auto px-4">
-            <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-4">Para quem é esse curso</h2>
-            <div class="section-divider mb-12"></div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Persona 1 -->
-                <div class="bg-white p-6 rounded-xl shadow-lg">
-                    <div class="flex items-center mb-6">
-                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z" />
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0" />
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-800">Donos de carros antigos</h3>
-                    </div>
-                    <p class="text-gray-600">Que desejam modernizar o painel e adicionar funcionalidades que só existem em carros mais novos e caros.</p>
-                </div>
-                
-                <!-- Persona 2 -->
-                <div class="bg-white p-6 rounded-xl shadow-lg">
-                    <div class="flex items-center mb-6">
-                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-800">Técnicos em eletrônica</h3>
-                    </div>
-                    <p class="text-gray-600">Iniciantes ou experientes que querem expandir seus conhecimentos para o setor automotivo e oferecer novos serviços.</p>
-                </div>
-                
-                <!-- Persona 3 -->
-                <div class="bg-white p-6 rounded-xl shadow-lg">
-                    <div class="flex items-center mb-6">
-                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-800">Mecânicos</h3>
-                    </div>
-                    <p class="text-gray-600">Que buscam um diferencial competitivo para atrair mais clientes e oferecer serviços de maior valor agregado.</p>
-                </div>
-                
-                <!-- Persona 4 -->
-                <div class="bg-white p-6 rounded-xl shadow-lg">
-                    <div class="flex items-center mb-6">
-                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-800">Curiosos por tecnologia</h3>
-                    </div>
-                    <p class="text-gray-600">Entusiastas que adoram projetos de eletrônica embarcada e querem aplicar seus conhecimentos em veículos.</p>
-                </div>
-                
-                <!-- Persona 5 -->
-                <div class="bg-white p-6 rounded-xl shadow-lg">
-                    <div class="flex items-center mb-6">
-                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-800">Empreendedores</h3>
-                    </div>
-                    <p class="text-gray-600">Pessoas que buscam transformar conhecimento técnico em uma fonte de renda adicional ou até mesmo um novo negócio.</p>
-                </div>
-                
-                <!-- CTA dentro da seção -->
-                <div class="bg-gradient-to-r from-blue-600 to-blue-800 p-6 rounded-xl shadow-lg text-white">
-                    <h3 class="text-xl font-bold mb-4">Pronto para começar?</h3>
-                    <p class="mb-6">Não importa seu nível de conhecimento atual, este curso foi desenhado para você aprender do zero.</p>
-                    <a href="#cta" class="cta-button inline-block px-6 py-3 rounded-lg font-bold text-white text-lg shadow-lg w-full text-center">
-                        Quero aprender agora
-                    </a>
-                </div>
-            </div>
+        <div class="card bg-white p-6 rounded-xl shadow">
+          <h3 class="text-xl font-bold mb-2">Leitura de dados em tempo real</h3>
+          <p>Visualize RPM, temperatura, voltagem e muito mais.</p>
         </div>
-    </section>
-
-    <!-- Prova Social -->
-    <section class="py-16 bg-gray-100">
-        <div class="container mx-auto px-4">
-            <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-4">Aprovação da Comunidade Especializada</h2>
-            <div class="section-divider mb-8"></div>
-            
-            <div class="text-center mb-12">
-                <div class="inline-block bg-blue-600 text-white px-6 py-3 rounded-full font-bold mb-4">
-                    Mais de 100 horas de testes validaram a eficácia dessa tecnologia
-                </div>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                
-				<!-- Validação Técnica 1 -->
-				<div class="testimonial-card bg-white p-6 rounded-xl shadow-lg">
-					<div class="flex items-center mb-4">
-						<div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-4">
-							<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-							</svg>
-						</div>
-						<div>
-							<h4 class="font-bold">Base Técnica Sólida</h4>
-							<p class="text-sm text-gray-500">Fundamentos para Projetos Automotivos</p>
-						</div>
-					</div>
-					<div class="flex mb-4">
-						<span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded">FUNDAMENTOS</span>
-						<span class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded ml-2">PRÁTICO</span>
-						<span class="bg-purple-100 text-purple-800 text-xs font-semibold px-2.5 py-0.5 rounded ml-2">PREPARATÓRIO</span>
-					</div>
-					<p class="text-gray-700">"Projetos desenvolvidos com base nos princípios da eletrônica automotiva profissional. Este treinamento prepara você para projetos básicos essenciais, criando uma base sólida para futuros avanços em comunicação OBD-II e protocolos mais complexos."</p>
-				</div>
-                
-				<!-- Validação Técnica 2 -->
-				<div class="testimonial-card bg-white p-6 rounded-xl shadow-lg">
-					<div class="flex items-center mb-4">
-						<div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
-							<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-							</svg>
-						</div>
-						<div>
-							<h4 class="font-bold">Validação em Laboratório</h4>
-							<p class="text-sm text-gray-500">100+ Horas de Testes Contínuos</p>
-						</div>
-					</div>
-					<div class="flex mb-4">
-						<span class="bg-red-100 text-red-800 text-xs font-semibold px-2.5 py-0.5 rounded">TEMPERATURA</span>
-						<span class="bg-yellow-100 text-yellow-800 text-xs font-semibold px-2.5 py-0.5 rounded ml-2">VOLTAGEM</span>
-						<span class="bg-indigo-100 text-indigo-800 text-xs font-semibold px-2.5 py-0.5 rounded ml-2">RPM</span>
-					</div>
-					<p class="text-gray-700">"Componentes testados em bancada por mais de 100 horas de funcionamento contínuo. Resistência comprovada a variações de temperatura (-10°C a +85°C) e oscilações de voltagem do sistema elétrico automotivo."</p>
-				</div>
-								
-				<!-- Validação Técnica 3 -->
-				<div class="testimonial-card bg-white p-6 rounded-xl shadow-lg">
-					<div class="flex items-center mb-4">
-						<div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mr-4">
-							<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-							</svg>
-						</div>
-						<div>
-							<h4 class="font-bold">Comunidade Arduino Brasil</h4>
-							<p class="text-sm text-gray-500">Método Aprovado por Especialistas</p>
-						</div>
-					</div>
-					<div class="flex mb-4">
-						<span class="bg-orange-100 text-orange-800 text-xs font-semibold px-2.5 py-0.5 rounded">OPEN-SOURCE</span>
-						<span class="bg-teal-100 text-teal-800 text-xs font-semibold px-2.5 py-0.5 rounded ml-2">VALIDADO</span>
-						<span class="bg-pink-100 text-pink-800 text-xs font-semibold px-2.5 py-0.5 rounded ml-2">SEGURO</span>
-					</div>
-					<p class="text-gray-700">"Técnicas baseadas em bibliotecas oficiais Arduino e validadas pela comunidade técnica internacional. Código aprovado em fóruns especializados (Arduino.cc, GitHub) com milhares de implementações bem-sucedidas."</p>
-				</div>               
-            </div>
+        <div class="card bg-white p-6 rounded-xl shadow">
+          <h3 class="text-xl font-bold mb-2">Adaptação para qualquer carro</h3>
+          <p>Dicas práticas para adaptar o projeto a diferentes modelos de veículos.</p>
         </div>
-    </section>
-
-    <!-- Bônus Exclusivos -->
-    <section class="py-16 md:py-24">
-        <div class="container mx-auto px-4">
-            <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-4">Bônus Exclusivos</h2>
-            <div class="section-divider mb-12"></div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Bônus 1 -->
-                <div class="bg-white p-6 rounded-xl shadow-lg flex">
-                    <div class="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-bold text-gray-800 mb-2">Checklist de compatibilidade</h3>
-                        <p class="text-gray-600">Documento completo para verificar se o seu carro é compatível com o projeto, incluindo dicas para adaptação em diferentes modelos.</p>
-                        <div class="mt-4 inline-block px-4 py-2 bg-amber-500 text-white rounded-lg font-medium">Bônus #1</div>
-                    </div>
-                </div>
-                
-                <!-- Bônus 2 -->
-                <div class="bg-white p-6 rounded-xl shadow-lg flex">
-                    <div class="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
-                        </svg>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-bold text-gray-800 mb-2">Lista de componentes atualizada</h3>
-                        <p class="text-gray-600">Lista completa com todos os componentes necessários, incluindo links para compra nos melhores preços e alternativas para cada peça.</p>
-                        <div class="mt-4 inline-block px-4 py-2 bg-amber-500 text-white rounded-lg font-medium">Bônus #2</div>
-                    </div>
-                </div>
-                
-                <!-- Bônus 3 -->
-                <div class="bg-white p-6 rounded-xl shadow-lg flex">
-                    <div class="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />
-                        </svg>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-bold text-gray-800 mb-2">Acesso vitalício ao grupo exclusivo</h3>
-                        <p class="text-gray-600">Participe do nosso grupo no Telegram com mais de 100 alunos e especialistas para tirar dúvidas e compartilhar experiências a qualquer momento.</p>
-                        <div class="mt-4 inline-block px-4 py-2 bg-amber-500 text-white rounded-lg font-medium">Bônus #3</div>
-                    </div>
-                </div>
-                
-                <!-- Bônus 4 -->
-                <div class="bg-white p-6 rounded-xl shadow-lg flex">
-                    <div class="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                        </svg>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-bold text-gray-800 mb-2">Atualizações vitalícias</h3>
-                        <p class="text-gray-600">Receba todas as atualizações futuras do curso sem custo adicional, incluindo novos modelos de painéis e compatibilidade com mais veículos.</p>
-                        <div class="mt-4 inline-block px-4 py-2 bg-amber-500 text-white rounded-lg font-medium">Bônus #4</div>
-                    </div>
-                </div>
-            </div>
+        <div class="card bg-white p-6 rounded-xl shadow">
+          <h3 class="text-xl font-bold mb-2">Computador de bordo completo</h3>
+          <p>Integre várias funções em um único sistema de monitoramento.</p>
         </div>
-    </section>
-
-    <!-- CTA Principal -->
-    <section id="cta" class="py-16 bg-gradient-to-r from-blue-700 to-blue-900 text-white">
-        <div class="container mx-auto px-4 text-center">
-            <h2 class="text-3xl md:text-4xl font-bold mb-6">🔥 Comece hoje a transformar seu carro com nosso painel digital — garanta seu acesso! 👇</h2>
-            
-            <div class="max-w-3xl mx-auto bg-white rounded-xl shadow-2xl overflow-hidden">
-                <div class="p-8">
-                    <h3 class="text-2xl font-bold text-gray-800 mb-4">Mini Curso Arduino Automotivo</h3>
-                    <p class="text-gray-600 mb-6">Transforme seu carro com Projetos digital de última geração</p>
-                    
-                        <div class="flex flex-col justify-center items-center text-center mb-8 space-y-6">
-						<div>
-							<span class="text-gray-500 line-through text-lg">De R$297</span>
-							<div class="text-3xl font-bold text-blue-600">Por apenas R$ 97</div>
-							<p class="text-gray-500">Pagamento único, acesso imediato</p>
-						</div>
-						<div>
-							<a href="#" class="cta-button px-8 py-4 rounded-lg font-bold text-white text-lg shadow-lg flex items-center justify-center">
-								<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
-								</svg>
-								Entrar agora
-							</a>
-						</div>
-					</div>
-                    
-                    <div class="flex flex-wrap justify-left gap-4">
-                        <div class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                            </svg>
-                            <span class="text-gray-600">Acesso imediato</span>
-                        </div>
-                        <div class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                            </svg>
-                            <span class="text-gray-600">Garantia de 7 dias</span>
-                        </div>
-                        <div class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                            </svg>
-                            <span class="text-gray-600">Suporte especializado</span>
-                        </div>
-                        <div class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                            </svg>
-                            <span class="text-gray-600">Todos os bônus inclusos</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="card bg-yellow-100 p-6 rounded-xl shadow border border-yellow-400">
+          <h3 class="text-xl font-bold mb-2">Transforme em fonte de renda</h3>
+          <p>Use o conhecimento para montar painéis e vender como serviço personalizado.</p>
         </div>
-    </section> 
+      </div>
+    </div>
+  </section>
 
-    <!-- FAQ Section -->
-    <section class="py-16 md:py-24">
-        <div class="container mx-auto px-4">
-            <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-4">Perguntas Frequentes</h2>
-            <div class="section-divider mb-12"></div>
-            
-            <div class="max-w-3xl mx-auto">
-                <!-- FAQ Item 1 -->
-                <div class="mb-6 faq-item">
-                    <button class="flex justify-between items-center w-full bg-white p-4 rounded-lg shadow-md text-left" onclick="toggleFaq(this)">
-                        <span class="text-lg font-bold text-gray-800">Preciso saber programar?</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600 transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                        </svg>
-                    </button>
-                    <div class="bg-white px-4 pb-4 rounded-b-lg shadow-md hidden">
-                        <p class="text-gray-600">Não. O curso ensina passo a passo mesmo para iniciantes. Todas as configurações são explicadas de forma simples e direta, sem necessidade de conhecimento prévio em programação.</p>
-                    </div>
-                </div>
-                
-                <!-- FAQ Item 2 -->
-                <div class="mb-6 faq-item">
-                    <button class="flex justify-between items-center w-full bg-white p-4 rounded-lg shadow-md text-left" onclick="toggleFaq(this)">
-                        <span class="text-lg font-bold text-gray-800">Funciona com qualquer carro?</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600 transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                        </svg>
-                    </button>
-                    <div class="bg-white px-4 pb-4 rounded-b-lg shadow-md hidden">
-                        <p class="text-gray-600">Com adaptações, sim. O projeto foi desenvolvido e testado principalmente com o Fiat Uno 2008, mas você aprenderá como adaptar para outros modelos. O grupo de suporte também ajuda com dúvidas específicas para cada veículo.</p>
-                    </div>
-                </div>
-                
-                <!-- FAQ Item 3 -->
-                <div class="mb-6 faq-item">
-                    <button class="flex justify-between items-center w-full bg-white p-4 rounded-lg shadow-md text-left" onclick="toggleFaq(this)">
-                        <span class="text-lg font-bold text-gray-800">Posso vender esse serviço depois?</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600 transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                        </svg>
-                    </button>
-                    <div class="bg-white px-4 pb-4 rounded-b-lg shadow-md hidden">
-                        <p class="text-gray-600">Sim. Muitos alunos usam esse projeto para oferecer serviços personalizados. O curso inclui dicas de como precificar seu trabalho e encontrar clientes interessados em modernizar seus veículos.</p>
-                    </div>
-                </div>
-                
-                <!-- FAQ Item 4 -->
-                <div class="mb-6 faq-item">
-                    <button class="flex justify-between items-center w-full bg-white p-4 rounded-lg shadow-md text-left" onclick="toggleFaq(this)">
-                        <span class="text-lg font-bold text-gray-800">Quanto tempo leva para instalar?</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600 transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                        </svg>
-                    </button>
-                    <div class="bg-white px-4 pb-4 rounded-b-lg shadow-md hidden">
-                        <p class="text-gray-600">A instalação completa leva em média 2-3 horas para quem está fazendo pela primeira vez. Com prática, é possível reduzir para cerca de 1 hora. O curso ensina técnicas para otimizar o processo de instalação.</p>
-                    </div>
-                </div>
-                
-                <!-- FAQ Item 5 -->
-                <div class="mb-6 faq-item">
-                    <button class="flex justify-between items-center w-full bg-white p-4 rounded-lg shadow-md text-left" onclick="toggleFaq(this)">
-                        <span class="text-lg font-bold text-gray-800">Qual o custo dos componentes?</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600 transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                        </svg>
-                    </button>
-                    <div class="bg-white px-4 pb-4 rounded-b-lg shadow-md hidden">
-                        <p class="text-gray-600">O custo total dos componentes varia entre R$150 e R$300, dependendo da qualidade e das funcionalidades que você deseja implementar. O curso inclui uma lista detalhada com opções para diferentes orçamentos.</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="text-center mt-12">
-                <a href="#cta" class="cta-button inline-block px-8 py-4 rounded-lg font-bold text-white text-lg shadow-lg">
-                    Quero transformar meu carro agora
-                </a>
-            </div>
-        </div>
-    </section>
+  <section id="cta" class="py-20 bg-blue-900 text-white text-center px-4">
+    <div class="max-w-3xl mx-auto">
+      <h2 class="text-3xl md:text-4xl font-bold mb-6">🔥 Garanta agora seu acesso ao Mini Curso Arduino Automotivo!</h2>
+      <p class="mb-8 text-lg">Aprenda como transformar seu painel com Arduino e tecnologia RealDash, mesmo começando do zero.</p>
+      <div class="bg-white text-gray-900 rounded-xl p-6 shadow-xl">
+        <h3 class="text-2xl font-bold mb-2">Oferta por tempo limitado:</h3>
+        <p class="text-xl mb-4">De <span class="line-through">R$ 297</span> por apenas <span class="text-blue-700 font-bold">R$ 97</span></p>
+        <a href="#" class="cta-button px-8 py-4 mt-2 rounded-lg font-bold text-white text-lg inline-block">🚀 Acessar agora</a>
+        <p class="text-sm mt-4 text-gray-600">Pagamento único | Acesso vitalício | Garantia de 7 dias</p>
+      </div>
+    </div>
+  </section>
 
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-white py-12">
-        <div class="container mx-auto px-4">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="mb-6 md:mb-0">
-                    <h3 class="text-2xl font-bold mb-2">Mini Curso Arduino Automotivo</h3>
-                    <p class="text-gray-400">Transforme seu carro com tecnologia de ponta</p>
-                </div>
-                <div class="flex flex-col md:flex-row gap-4 md:gap-8">
-                    <a href="#" class="text-gray-300 hover:text-white transition-colors">Termos de Uso</a>
-                    <a href="#" class="text-gray-300 hover:text-white transition-colors">Política de Privacidade</a>
-                    <a href="#" class="text-gray-300 hover:text-white transition-colors">Suporte</a>
-                </div>
-            </div>
-            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-                <p>&copy; 2025 Aviso Legal:
-Todos os direitos reservados. Este treinamento tem finalidade exclusivamente educacional. Os resultados podem variar conforme a aplicação, a qualidade dos componentes e as particularidades de cada veículo. Não nos responsabilizamos por danos, falhas ou prejuízos causados por modificações realizadas com base neste conteúdo..</p>
-            </div>
-        </div>
-    </footer>
+  <footer class="bg-gray-800 text-gray-400 text-sm py-8 px-4 text-center">
+    <p>&copy; 2025 Sergyo Eletrônico - Todos os direitos reservados.</p>
+    <p>Este treinamento é educacional e não garante que todos os projetos funcionarão perfeitamente em todos os veículos. O sucesso depende da correta aplicação das técnicas ensinadas, qualidade dos componentes e características de cada veículo. Não nos responsabilizamos por modificações mal executadas.</p>
+  </footer>
 
-    <script>
-        // Smooth scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-        
-        // FAQ toggle
-        function toggleFaq(element) {
-            const content = element.nextElementSibling;
-            const arrow = element.querySelector('svg');
-            
-            if (content.classList.contains('hidden')) {
-                content.classList.remove('hidden');
-                arrow.classList.add('rotate-180');
-            } else {
-                content.classList.add('hidden');
-                arrow.classList.remove('rotate-180');
-            }
-        }
-    </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'94700c2346f4a575',t:'MTc0ODQ1OTM3Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+  <!-- Botão Flutuante WhatsApp -->
+  <a href="https://wa.me/5584996402534" target="_blank" class="fixed bottom-4 right-4 z-50">
+    <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" alt="Fale no WhatsApp" class="w-12 h-12 shadow-xl rounded-full">
+  </a>
+</body>
 </html>
