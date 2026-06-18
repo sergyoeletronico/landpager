@@ -1,981 +1,552 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transforme o Painel do Seu Carro com Arduino | Curso Prático</title>
-    <meta name="description" content="Aprenda a criar um computador de bordo completo para seu carro em 1 final de semana. Curso prático com Arduino + RealDash. Apenas 12 vagas!">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        /* Header fixo com WhatsApp */
-        .top-bar {
-            background: #25D366;
-            color: white;
-            padding: 12px 0;
-            text-align: center;
-            font-weight: 600;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        
-        .top-bar a {
-            color: white;
-            text-decoration: none;
-        }
-        
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 60px 20px;
-            text-align: center;
-        }
-        
-        .hero h1 {
-            font-size: 42px;
-            margin-bottom: 20px;
-            line-height: 1.2;
-        }
-        
-        .hero h1 span {
-            color: #FFD700;
-            display: block;
-            font-size: 36px;
-            margin-top: 10px;
-        }
-        
-        .hero-subtitle {
-            font-size: 22px;
-            margin-bottom: 30px;
-            opacity: 0.95;
-        }
-        
-        /* Urgência */
-        .urgency-box {
-            background: rgba(255, 255, 255, 0.15);
-            border: 2px solid #FFD700;
-            border-radius: 12px;
-            padding: 20px;
-            margin: 30px auto;
-            max-width: 600px;
-            backdrop-filter: blur(10px);
-        }
-        
-        .urgency-box h3 {
-            color: #FFD700;
-            font-size: 24px;
-            margin-bottom: 15px;
-        }
-        
-        .urgency-item {
-            font-size: 18px;
-            margin: 10px 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-        
-        /* CTA Principal */
-        .cta-button {
-            display: inline-block;
-            background: #FF6B35;
-            color: white;
-            padding: 20px 50px;
-            font-size: 24px;
-            font-weight: bold;
-            text-decoration: none;
-            border-radius: 50px;
-            margin: 20px 0;
-            transition: all 0.3s ease;
-            box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
-            text-transform: uppercase;
-        }
-        
-        .cta-button:hover {
-            background: #ff5722;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.6);
-        }
-        
-        .cta-subtext {
-            font-size: 14px;
-            margin-top: 10px;
-            opacity: 0.9;
-        }
-        
-        /* Antes e Depois */
-        .before-after {
-            background: white;
-            padding: 60px 20px;
-        }
-        
-        .before-after h2 {
-            text-align: center;
-            font-size: 36px;
-            margin-bottom: 40px;
-            color: #333;
-        }
-        
-        .comparison {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-        
-        .comparison-item {
-            text-align: center;
-            padding: 30px;
-            border-radius: 12px;
-            transition: transform 0.3s ease;
-        }
-        
-        .before {
-            background: #f8f9fa;
-            border: 3px solid #dc3545;
-        }
-        
-        .after {
-            background: #e8f5e9;
-            border: 3px solid #28a745;
-        }
-        
-        .comparison-item:hover {
-            transform: scale(1.05);
-        }
-        
-        .comparison-item h3 {
-            font-size: 28px;
-            margin-bottom: 20px;
-        }
-        
-        .comparison-item .icon {
-            font-size: 80px;
-            margin-bottom: 20px;
-        }
-        
-        .comparison-item ul {
-            list-style: none;
-            text-align: left;
-            font-size: 16px;
-        }
-        
-        .comparison-item ul li {
-            margin: 10px 0;
-            padding-left: 25px;
-            position: relative;
-        }
-        
-        .before ul li:before {
-            content: "❌";
-            position: absolute;
-            left: 0;
-        }
-        
-        .after ul li:before {
-            content: "✅";
-            position: absolute;
-            left: 0;
-        }
-        
-        /* Problema */
-        .problema {
-            background: #f8f9fa;
-            padding: 60px 20px;
-        }
-        
-        .problema h2 {
-            text-align: center;
-            font-size: 36px;
-            margin-bottom: 20px;
-            color: #333;
-        }
-        
-        .problema-subtitle {
-            text-align: center;
-            font-size: 20px;
-            margin-bottom: 40px;
-            color: #666;
-        }
-        
-        .problema-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-        
-        .problema-card {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-        
-        .problema-card h3 {
-            font-size: 22px;
-            margin-bottom: 15px;
-            color: #667eea;
-        }
-        
-        /* O que você vai aprender */
-        .aprender {
-            background: white;
-            padding: 60px 20px;
-        }
-        
-        .aprender h2 {
-            text-align: center;
-            font-size: 36px;
-            margin-bottom: 50px;
-            color: #333;
-        }
-        
-        .modulos {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .modulo {
-            background: #f8f9fa;
-            padding: 25px;
-            margin: 20px 0;
-            border-radius: 12px;
-            border-left: 5px solid #667eea;
-            transition: all 0.3s ease;
-        }
-        
-        .modulo:hover {
-            transform: translateX(10px);
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
-        }
-        
-        .modulo h3 {
-            font-size: 22px;
-            margin-bottom: 10px;
-            color: #667eea;
-        }
-        
-        /* Para quem é */
-        .para-quem {
-            background: #f8f9fa;
-            padding: 60px 20px;
-        }
-        
-        .para-quem h2 {
-            text-align: center;
-            font-size: 36px;
-            margin-bottom: 50px;
-            color: #333;
-        }
-        
-        .para-quem-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-        
-        .para-quem-box {
-            padding: 30px;
-            border-radius: 12px;
-        }
-        
-        .para-quem-sim {
-            background: #e8f5e9;
-            border: 3px solid #28a745;
-        }
-        
-        .para-quem-nao {
-            background: #ffebee;
-            border: 3px solid #dc3545;
-        }
-        
-        .para-quem-box h3 {
-            font-size: 24px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        
-        .para-quem-box ul {
-            list-style: none;
-        }
-        
-        .para-quem-box ul li {
-            margin: 15px 0;
-            padding-left: 35px;
-            position: relative;
-            font-size: 16px;
-        }
-        
-        .para-quem-sim ul li:before {
-            content: "✅";
-            position: absolute;
-            left: 0;
-            font-size: 20px;
-        }
-        
-        .para-quem-nao ul li:before {
-            content: "❌";
-            position: absolute;
-            left: 0;
-            font-size: 20px;
-        }
-        
-        /* Investimento */
-        .investimento {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 60px 20px;
-            text-align: center;
-        }
-        
-        .investimento h2 {
-            font-size: 36px;
-            margin-bottom: 30px;
-        }
-        
-        .price-box {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 40px;
-            max-width: 600px;
-            margin: 0 auto 30px;
-        }
-        
-        .old-price {
-            font-size: 24px;
-            text-decoration: line-through;
-            opacity: 0.7;
-            margin-bottom: 10px;
-        }
-        
-        .new-price {
-            font-size: 64px;
-            font-weight: bold;
-            color: #FFD700;
-            margin: 20px 0;
-        }
-        
-        .new-price small {
-            font-size: 32px;
-        }
-        
-        .economia {
-            background: #28a745;
-            display: inline-block;
-            padding: 10px 30px;
-            border-radius: 50px;
-            font-size: 20px;
-            font-weight: bold;
-            margin: 20px 0;
-        }
-        
-        .bonus-list {
-            text-align: left;
-            max-width: 500px;
-            margin: 30px auto;
-        }
-        
-        .bonus-list li {
-            margin: 15px 0;
-            font-size: 18px;
-            padding-left: 30px;
-            position: relative;
-        }
-        
-        .bonus-list li:before {
-            content: "🎁";
-            position: absolute;
-            left: 0;
-        }
-        
-        /* FAQ */
-        .faq {
-            background: white;
-            padding: 60px 20px;
-        }
-        
-        .faq h2 {
-            text-align: center;
-            font-size: 36px;
-            margin-bottom: 50px;
-            color: #333;
-        }
-        
-        .faq-container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .faq-item {
-            background: #f8f9fa;
-            margin: 15px 0;
-            border-radius: 12px;
-            overflow: hidden;
-        }
-        
-        .faq-question {
-            padding: 20px;
-            font-size: 18px;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: background 0.3s ease;
-        }
-        
-        .faq-question:hover {
-            background: #e9ecef;
-        }
-        
-        .faq-answer {
-            padding: 0 20px;
-            max-height: 0;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-        
-        .faq-answer.active {
-            padding: 20px;
-            max-height: 500px;
-        }
-        
-        /* Garantia */
-        .garantia {
-            background: #e8f5e9;
-            padding: 60px 20px;
-            text-align: center;
-        }
-        
-        .garantia-box {
-            max-width: 700px;
-            margin: 0 auto;
-            background: white;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-        
-        .garantia-icon {
-            font-size: 80px;
-            margin-bottom: 20px;
-        }
-        
-        .garantia h2 {
-            font-size: 36px;
-            color: #28a745;
-            margin-bottom: 20px;
-        }
-        
-        /* Footer CTA */
-        .footer-cta {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 80px 20px;
-            text-align: center;
-        }
-        
-        .footer-cta h2 {
-            font-size: 42px;
-            margin-bottom: 30px;
-        }
-        
-        /* Responsivo */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 32px;
-            }
-            
-            .hero h1 span {
-                font-size: 28px;
-            }
-            
-            .comparison {
-                grid-template-columns: 1fr;
-            }
-            
-            .para-quem-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .new-price {
-                font-size: 48px;
-            }
-            
-            .cta-button {
-                padding: 18px 35px;
-                font-size: 20px;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sergyo Eletrônico – Upgrades para Fiat Uno</title>
+<meta name="description" content="Painel Uno Economy com conta-giro, computador de bordo, módulo de volante LIN e acessórios eletrônicos para Fiat Uno 2005–2013. Desenvolvido por especialista com 30 anos de experiência.">
+<meta name="keywords" content="painel fiat uno conta giro, painel uno economy rpm, computador de bordo uno, modulo volante fiat uno, upgrade painel uno, painel tipo exportacao uno">
+<meta property="og:title" content="Sergyo Eletrônico – Upgrades para Fiat Uno">
+<meta property="og:description" content="Painel com conta-giro, computador de bordo e módulo de volante para Fiat Uno. Testado no carro, desenvolvido por especialista.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sergyoeletronico.com">
+<link rel="canonical" href="https://sergyoeletronico.com">
+<style>
+:root {
+  --bg: #0f0f0f;
+  --bg2: #171717;
+  --bg3: #1f1f1f;
+  --amber: #f0b942;
+  --amber-dim: #c8942a;
+  --text: #e8e8e8;
+  --text-muted: #888;
+  --text-dim: #555;
+  --border: #2a2a2a;
+  --radius: 12px;
+  --radius-sm: 8px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;line-height:1.6;}
+
+/* TOP BAR */
+.topbar{background:var(--amber);color:#111;text-align:center;padding:10px 20px;font-size:14px;font-weight:600;position:sticky;top:0;z-index:100;}
+.topbar a{color:#111;text-decoration:none;}
+.topbar a:hover{text-decoration:underline;}
+
+/* NAV */
+nav{background:var(--bg2);border-bottom:1px solid var(--border);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+.nav-brand{font-size:18px;font-weight:700;color:var(--amber);letter-spacing:-0.3px;}
+.nav-brand span{color:var(--text-muted);font-weight:400;font-size:13px;display:block;margin-top:-2px;}
+.nav-links{display:flex;gap:20px;flex-wrap:wrap;}
+.nav-links a{color:var(--text-muted);text-decoration:none;font-size:14px;transition:color .2s;}
+.nav-links a:hover{color:var(--text);}
+
+/* HERO */
+.hero{padding:70px 20px 60px;text-align:center;border-bottom:1px solid var(--border);position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 40% at 50% 0%, rgba(240,185,66,.08) 0%, transparent 70%);pointer-events:none;}
+.hero-eyebrow{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);margin-bottom:18px;}
+.hero h1{font-size:clamp(28px,5vw,52px);font-weight:700;line-height:1.15;margin-bottom:16px;max-width:760px;margin-left:auto;margin-right:auto;}
+.hero h1 em{color:var(--amber);font-style:normal;}
+.hero-sub{font-size:17px;color:var(--text-muted);max-width:560px;margin:0 auto 36px;}
+.hero-ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+.btn-primary{background:var(--amber);color:#111;font-weight:700;font-size:15px;padding:13px 28px;border-radius:50px;text-decoration:none;transition:background .2s,transform .15s;}
+.btn-primary:hover{background:#e0a830;transform:translateY(-1px);}
+.btn-secondary{background:transparent;color:var(--text);font-size:15px;padding:13px 28px;border-radius:50px;text-decoration:none;border:1px solid var(--border);transition:border-color .2s;}
+.btn-secondary:hover{border-color:#555;}
+.btn-whatsapp{background:#25D366;color:#fff;font-weight:700;font-size:15px;padding:13px 28px;border-radius:50px;text-decoration:none;transition:background .2s,transform .15s;}
+.btn-whatsapp:hover{background:#1ebe5a;transform:translateY(-1px);}
+.btn-youtube{background:#FF0000;color:#fff;font-weight:700;font-size:15px;padding:13px 28px;border-radius:50px;text-decoration:none;transition:background .2s,transform .15s;}
+.btn-youtube:hover{background:#cc0000;transform:translateY(-1px);}
+.hero-stats{display:flex;gap:32px;justify-content:center;margin-top:50px;flex-wrap:wrap;}
+.stat{text-align:center;}
+.stat-num{font-size:26px;font-weight:700;color:var(--amber);}
+.stat-label{font-size:12px;color:var(--text-muted);margin-top:2px;}
+
+/* SECTION */
+section{padding:64px 20px;}
+.section-inner{max-width:1100px;margin:0 auto;}
+.section-label{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);margin-bottom:10px;}
+.section-title{font-size:clamp(22px,3.5vw,34px);font-weight:700;margin-bottom:8px;line-height:1.2;}
+.section-sub{font-size:16px;color:var(--text-muted);max-width:560px;margin-bottom:40px;}
+
+/* PRODUTOS */
+.products-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;}
+.product-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:border-color .2s,transform .2s;}
+.product-card:hover{border-color:#3a3a3a;transform:translateY(-2px);}
+.product-card.featured{border-color:var(--amber-dim);}
+.card-badge{position:absolute;top:12px;left:12px;background:var(--amber);color:#111;font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;letter-spacing:.04em;}
+.card-img{height:130px;display:flex;align-items:center;justify-content:center;position:relative;font-size:48px;}
+.card-img.painel{background:linear-gradient(135deg,#111 0%,#1a1400 100%);}
+.card-img.obc{background:linear-gradient(135deg,#0a0a1a 0%,#0d1520 100%);}
+.card-img.lin{background:linear-gradient(135deg,#0e0a1a 0%,#1a0d2e 100%);}
+.card-img.kit{background:linear-gradient(135deg,#0a1a0a 0%,#0d200d 100%);}
+.card-img img{width:100%;height:130px;object-fit:cover;display:block;}
+.card-img img.broken{display:none;}
+.card-body{padding:16px;}
+.card-tag{display:inline-block;font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px;margin-bottom:8px;}
+.tag-hot{background:rgba(240,185,66,.15);color:var(--amber);}
+.tag-new{background:rgba(80,180,120,.15);color:#50b478;}
+.tag-pro{background:rgba(100,140,240,.15);color:#6a8cf0;}
+.tag-kit{background:rgba(180,100,240,.15);color:#b464f0;}
+.tag-svc{background:rgba(240,100,100,.15);color:#f06464;}
+.card-title{font-size:15px;font-weight:600;color:var(--text);margin-bottom:6px;line-height:1.3;}
+.card-desc{font-size:13px;color:var(--text-muted);line-height:1.5;margin-bottom:14px;}
+.card-specs{list-style:none;margin-bottom:14px;}
+.card-specs li{font-size:12px;color:var(--text-dim);padding:3px 0;padding-left:14px;position:relative;}
+.card-specs li::before{content:'–';position:absolute;left:0;color:var(--amber);}
+.card-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--border);}
+.price-old{font-size:12px;color:var(--text-dim);text-decoration:line-through;}
+.price{font-size:20px;font-weight:700;color:var(--amber);}
+.card-btn{font-size:13px;padding:8px 16px;border-radius:50px;background:transparent;border:1px solid var(--border);color:var(--text-muted);text-decoration:none;transition:all .2s;cursor:pointer;}
+.card-btn:hover{border-color:var(--amber);color:var(--amber);}
+.card-btn.primary{background:var(--amber);border-color:var(--amber);color:#111;font-weight:600;}
+.card-btn.primary:hover{background:#e0a830;}
+.card-btn.whatsapp{background:#25D366;border-color:#25D366;color:#fff;font-weight:600;}
+.card-btn.whatsapp:hover{background:#1ebe5a;}
+
+/* DIFERENCIAIS */
+.diff-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;}
+.diff-item{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:20px;}
+.diff-icon{font-size:24px;margin-bottom:10px;}
+.diff-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px;}
+.diff-text{font-size:13px;color:var(--text-muted);line-height:1.5;}
+
+/* COMO FUNCIONA (serviço remoto) */
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:0;counter-reset:steps;}
+.step{padding:24px;position:relative;counter-increment:steps;}
+.step::before{content:counter(steps,'decimal-leading-zero');font-size:36px;font-weight:700;color:var(--border);display:block;margin-bottom:8px;line-height:1;}
+.step-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px;}
+.step-text{font-size:13px;color:var(--text-muted);line-height:1.5;}
+.step+.step{border-left:1px solid var(--border);}
+@media(max-width:600px){.step+.step{border-left:none;border-top:1px solid var(--border);}}
+
+/* MODELOS COMPATÍVEIS */
+.compat{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:28px;margin-top:32px;}
+.compat-title{font-size:13px;font-weight:600;color:var(--text-muted);margin-bottom:14px;text-transform:uppercase;letter-spacing:.06em;}
+.compat-list{display:flex;flex-wrap:wrap;gap:8px;}
+.compat-tag{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:5px 12px;font-size:13px;color:var(--text-muted);}
+
+/* FAQ */
+.faq-list{max-width:720px;}
+.faq-item{border-bottom:1px solid var(--border);}
+.faq-q{width:100%;background:none;border:none;color:var(--text);font-size:15px;font-weight:500;text-align:left;padding:18px 0;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px;}
+.faq-q:hover{color:var(--amber);}
+.faq-icon{color:var(--amber);font-size:20px;flex-shrink:0;transition:transform .2s;}
+.faq-icon.open{transform:rotate(45deg);}
+.faq-a{font-size:14px;color:var(--text-muted);line-height:1.7;max-height:0;overflow:hidden;transition:max-height .3s ease,padding .2s;}
+.faq-a.open{max-height:300px;padding-bottom:16px;}
+
+/* CTA FINAL */
+.cta-final{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:48px 32px;text-align:center;}
+.cta-final h2{font-size:clamp(22px,3vw,32px);font-weight:700;margin-bottom:10px;}
+.cta-final p{font-size:16px;color:var(--text-muted);margin-bottom:28px;max-width:480px;margin-left:auto;margin-right:auto;}
+.cta-contacts{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:24px;}
+.contact-item{font-size:13px;color:var(--text-muted);}
+
+/* FOOTER */
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:32px 20px;text-align:center;}
+footer p{font-size:13px;color:var(--text-dim);}
+footer a{color:var(--text-muted);text-decoration:none;}
+footer a:hover{color:var(--amber);}
+
+/* DIVIDER */
+.divider{border:none;border-top:1px solid var(--border);margin:0;}
+
+@media(max-width:640px){
+  .hero{padding:50px 16px 40px;}
+  .hero-stats{gap:20px;}
+  section{padding:48px 16px;}
+  .card-footer{flex-direction:column;align-items:flex-start;gap:10px;}
+}
+</style>
+<!-- Google Analytics – substitua G-XXXXXXXXXX pelo seu ID -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+</script>
 </head>
 <body>
-    <!-- Top Bar com WhatsApp -->
-    <div class="top-bar">
-        📱 Dúvidas? WhatsApp: <a href="https://chat.whatsapp.com/IbmfPZq3nUBK4gGGZwoNqw?mode=wwc">(84) 99640-2534</a>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  📱 Dúvidas? WhatsApp: <a href="https://wa.me/5584996402534" target="_blank" rel="noopener">(84) 99640-2534</a> &nbsp;|&nbsp; Envio para todo o Brasil
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">
+    Sergyo Eletrônico
+    <span>Eletrônica automotiva especializada</span>
+  </div>
+  <div class="nav-links">
+    <a href="#produtos">Produtos</a>
+    <a href="#servico">Serviço remoto</a>
+    <a href="#compatibilidade">Compatibilidade</a>
+    <a href="#faq">Dúvidas</a>
+    <a href="https://youtube.com/@sergyoeletronico" target="_blank" rel="noopener">YouTube ↗</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">Especialista em Fiat Uno · desde 2015</div>
+  <h1>Upgrades eletrônicos para<br><em>Fiat Uno que funcionam de verdade</em></h1>
+  <p class="hero-sub">Painel com conta-giro, computador de bordo e módulo de volante — desenvolvidos via protocolo real do ECU, testados no carro.</p>
+  <div class="hero-ctas">
+    <a href="https://wa.me/5584996402534" target="_blank" rel="noopener" class="btn-whatsapp">💬 WhatsApp</a>
+    <a href="https://youtube.com/@sergyoeletronico" target="_blank" rel="noopener" class="btn-youtube">▶ YouTube</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">2015</div><div class="stat-label">no mercado de upgrades</div></div>
+    <div class="stat"><div class="stat-num">K-Line</div><div class="stat-label">protocolo nativo Fiat</div></div>
+    <div class="stat"><div class="stat-num">100%</div><div class="stat-label">testado no carro</div></div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- PRODUTOS -->
+<section id="produtos">
+  <div class="section-inner">
+    <div class="section-label">Produtos</div>
+    <h2 class="section-title">O que você pode instalar no seu Uno</h2>
+    <p class="section-sub">Todos os produtos são desenvolvidos e testados em Fiat Uno real. Não é adaptação genérica.</p>
+
+    <div class="products-grid">
+
+      <!-- PAINEL ECONOMY -->
+      <div class="product-card featured">
+        <div class="card-img painel">
+          <img src="img/painel-uno-economy-rpm.jpg" alt="Painel Fiat Uno Economy com conta-giro RPM modificado" style="width:100%;height:130px;object-fit:cover;display:block;">
+          <span class="card-badge">Mais vendido</span>
+        </div>
+        <div class="card-body">
+          <span class="card-tag tag-hot">🔥 Alta demanda</span>
+          <p class="card-title">Painel Uno Economy com conta-giro</p>
+          <p class="card-desc">Painel Economy modificado com RPM funcionando, LED de iluminação com acendimento gradual ao abrir a porta e display com dígitos negativos (fundo escuro).</p>
+          <ul class="card-specs">
+            <li>RPM via gravação de firmware no microcontrolador</li>
+            <li>LED gradual ao abrir a porta</li>
+            <li>Display polarizado — dígitos negativos</li>
+            <li>Visual tipo exportação, custo acessível</li>
+          </ul>
+          <div class="card-footer">
+            <div>
+              <div class="price-old">Original tipo exportação: R$ 1.200</div>
+              <div class="price">R$ 850 <span style="font-size:13px;font-weight:400;color:var(--text-muted)">completo</span></div>
+            </div>
+            <a href="https://wa.me/5584996402534?text=Olá, tenho interesse no Painel Uno Economy com conta-giro" target="_blank" rel="noopener" class="card-btn whatsapp">💬 Pedir agora</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- OBC -->
+      <div class="product-card">
+        <div class="card-img obc">
+          <img src="img/computador-bordo-uno.jpg" alt="Computador de bordo Fiat Uno 2005 2013 display TFT colorido" style="width:100%;height:130px;object-fit:cover;display:block;">
+        </div>
+        <div class="card-body">
+          <span class="card-tag tag-pro">⚙️ Técnico</span>
+          <p class="card-title">Computador de bordo Uno 2005–2013</p>
+          <p class="card-desc">OBC com display colorido TFT mostrando dados em tempo real direto do ECU via protocolo K-Line/KWP2000. Temperatura, tensão, consumo e mais.</p>
+          <ul class="card-specs">
+            <li>Display TFT ST7789 colorido</li>
+            <li>Comunicação K-Line nativa com ECU</li>
+            <li>Temperatura, tensão, velocidade, RPM</li>
+            <li>Firmware exclusivo, não genérico</li>
+          </ul>
+          <div class="card-footer">
+            <div>
+              <div class="price">R$ 380</div>
+            </div>
+            <a href="https://wa.me/5584996402534?text=Olá, tenho interesse no Computador de Bordo para Fiat Uno" target="_blank" rel="noopener" class="card-btn whatsapp">💬 Consultar</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- LIN-FI -->
+      <div class="product-card">
+        <div class="card-img lin">
+          <img src="img/modulo-lin-fi-volante.jpg" alt="Módulo LIN-FI controles volante Fiat Uno rádio Android" style="width:100%;height:130px;object-fit:cover;display:block;">
+          <span class="card-badge" style="background:#50b478;color:#fff;">Novo</span>
+        </div>
+        <div class="card-body">
+          <span class="card-tag tag-new">✦ Lançamento</span>
+          <p class="card-title">Módulo LIN-FI — Volante Fiat no rádio Android</p>
+          <p class="card-desc">Os controles do volante do Fiat Argo/Uno passam a funcionar no seu rádio Android sem cortar fios originais. Módulo instalado dentro do volante.</p>
+          <ul class="card-specs">
+            <li>Lê barramento LIN do volante</li>
+            <li>Transmite via RF 433MHz sem fio</li>
+            <li>Emula protocolo Raise VW para Android</li>
+            <li>Compatível com rádios 2 DIN Android</li>
+          </ul>
+          <div class="card-footer">
+            <div>
+              <div class="price">R$ 420</div>
+            </div>
+            <a href="https://wa.me/5584996402534?text=Olá, tenho interesse no Módulo LIN-FI para volante Fiat" target="_blank" rel="noopener" class="card-btn whatsapp">💬 Consultar</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- KIT COMPLETO -->
+      <div class="product-card">
+        <div class="card-img kit">
+          <img src="img/kit-completo-uno.jpg" alt="Kit completo upgrade Fiat Uno painel RPM computador bordo módulo volante" style="width:100%;height:130px;object-fit:cover;display:block;">
+        </div>
+        <div class="card-body">
+          <span class="card-tag tag-kit">★ Kit</span>
+          <p class="card-title">Kit completo — Painel + OBC + Volante</p>
+          <p class="card-desc">Os três produtos integrados com desconto. Seu Uno fica com painel com RPM, computador de bordo ativo e controles do volante funcionando no rádio.</p>
+          <ul class="card-specs">
+            <li>Painel Economy com conta-giro</li>
+            <li>Computador de bordo TFT</li>
+            <li>Módulo LIN-FI para volante</li>
+            <li>Suporte técnico incluso por 30 dias</li>
+          </ul>
+          <div class="card-footer">
+            <div>
+              <div class="price-old">Separado: R$ 1.650</div>
+              <div class="price">R$ 1.390</div>
+            </div>
+            <a href="https://wa.me/5584996402534?text=Olá, tenho interesse no Kit Completo para Fiat Uno" target="_blank" rel="noopener" class="card-btn whatsapp">💬 Pedir kit</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- SERVIÇO REMOTO -->
+<section id="servico" style="background:var(--bg2);">
+  <div class="section-inner">
+    <div class="section-label">Serviço remoto</div>
+    <h2 class="section-title">Manda seu painel, a gente modifica e devolve</h2>
+    <p class="section-sub">Você tem um Fiat Uno Economy e quer o upgrade de conta-giro? Não precisa comprar painel novo. Enviamos de volta com tudo instalado.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-title">Você nos contata</div>
+        <div class="step-text">WhatsApp para combinar os detalhes, confirmar compatibilidade e receber o endereço de envio.</div>
+      </div>
+      <div class="step">
+        <div class="step-title">Envia o painel</div>
+        <div class="step-text">Retire o painel do carro e envie pelos Correios com declaração de valor. Embalagem simples com espuma funciona bem.</div>
+      </div>
+      <div class="step">
+        <div class="step-title">Modificamos aqui</div>
+        <div class="step-text">Gravação de firmware no microcontrolador do painel, instalação do circuito de LED gradual e troca da película polarizadora do display.</div>
+      </div>
+      <div class="step">
+        <div class="step-title">Devolvemos pronto</div>
+        <div class="step-text">Painel testado, embalado e despachado de volta. Você instala e puxa o fio de RPM na bobina conforme o guia que enviamos.</div>
+      </div>
     </div>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <h1>
-                Transforme o Painel do Seu Carro
-                <span>em um Computador de Bordo Profissional</span>
-            </h1>
-            <p class="hero-subtitle">
-                Aprenda a criar um painel digital completo com Arduino + RealDash,<br>
-                <strong>mesmo que você nunca tenha escrito uma linha de código</strong>
-            </p>
-            
-            <div class="urgency-box">
-                <h3>⚠️ ATENÇÃO: Oferta Limitada!</h3>
-                <div class="urgency-item">🔥 Apenas <strong>20 vagas</strong> disponíveis</div>
-                <div class="urgency-item">⏰ Encerra em: <strong>25/10/2025</strong></div>
-                <div class="urgency-item">💰 De R$ 497 por apenas <strong>R$ 297</strong></div>
-            </div>
-            
-            <a href="#investimento" class="cta-button">
-                🚀 SIM! QUERO TRANSFORMAR MEU CARRO
-            </a>
-            <p class="cta-subtext">✅ Acesso imediato após a confirmação</p>
-        </div>
-    </section>
+    <div style="margin-top:32px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:20px;max-width:600px;">
+      <p style="font-size:14px;color:var(--text-muted);margin-bottom:8px;">Custo do serviço remoto (painel do cliente)</p>
+      <p style="font-size:22px;font-weight:700;color:var(--amber);margin-bottom:4px;">R$ 350 <span style="font-size:14px;font-weight:400;color:var(--text-muted)">+ frete ida/volta</span></p>
+      <p style="font-size:13px;color:var(--text-dim);">Frete por conta do cliente. Tempo médio: 5–7 dias úteis após recebimento.</p>
+    </div>
 
-    <!-- Antes e Depois -->
-    <section class="before-after">
-        <div class="container">
-            <h2>De Um Painel Ultrapassado para Tecnologia de Ponta</h2>
-            <div class="comparison">
-                <div class="comparison-item before">
-                    <div class="icon">😞</div>
-                    <h3>ANTES</h3>
-                    <ul>
-                        <li>Painel analógico ultrapassado</li>
-                        <li>Sem informações importantes</li>
-                        <li>Visual anos 90</li>
-                        <li>Limitado de fábrica</li>
-                        <li>Impossível personalizar</li>
-                    </ul>
-                </div>
-                <div class="comparison-item after">
-                    <div class="icon">🚀</div>
-                    <h3>DEPOIS</h3>
-                    <ul>
-                        <li>Painel digital moderno</li>
-                        <li>Todas as informações do motor</li>
-                        <li>Visual profissional</li>
-                        <li>100% personalizável</li>
-                        <li>Feito por VOCÊ!</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
+    <div style="margin-top:20px;">
+      <a href="https://wa.me/5584996402534?text=Olá, quero enviar meu painel Uno Economy para modificação" target="_blank" rel="noopener" class="btn-whatsapp">💬 Contratar serviço remoto</a>
+    </div>
+  </div>
+</section>
 
-    <!-- Problema -->
-    <section class="problema">
-        <div class="container">
-            <h2>Você Já Passou Por Isso?</h2>
-            <p class="problema-subtitle">Muita gente que ama carro enfrenta esses desafios:</p>
-            
-            <div class="problema-grid">
-                <div class="problema-card">
-                    <h3>🤔 Queria modernizar o carro...</h3>
-                    <p>Mas acha que é caro demais ou complicado instalar um computador de bordo moderno.</p>
-                </div>
-                <div class="problema-card">
-                    <h3>💸 Preços absurdos nas oficinas</h3>
-                    <p>Um painel digital customizado custa R$ 2.000+ para instalar. Fora a mão de obra!</p>
-                </div>
-                <div class="problema-card">
-                    <h3>😰 Medo de mexer na eletrônica</h3>
-                    <p>"E se eu queimar alguma coisa? E se der curto? Melhor nem tentar..."</p>
-                </div>
-                <div class="problema-card">
-                    <h3>🔧 Depende sempre de terceiros</h3>
-                    <p>Qualquer modificação no carro = levar na oficina e gastar uma fortuna.</p>
-                </div>
-                <div class="problema-card">
-                    <h3>📱 Viu vídeos mas não consegue</h3>
-                    <p>Tentou seguir tutoriais no YouTube, mas faltam informações importantes e você trava.</p>
-                </div>
-                <div class="problema-card">
-                    <h3>💻 Programação parece impossível</h3>
-                    <p>"Nunca programei nada na vida, isso não é pra mim..."</p>
-                </div>
-            </div>
-            
-            <div style="text-align: center; margin-top: 50px;">
-                <h3 style="font-size: 28px; color: #667eea; margin-bottom: 20px;">
-                    Se você se identificou com PELO MENOS UM desses problemas...
-                </h3>
-                <p style="font-size: 22px; color: #333;">
-                    <strong>Este curso é EXATAMENTE o que você precisa!</strong>
-                </p>
-            </div>
-        </div>
-    </section>
+<hr class="divider">
 
-    <!-- O que você vai aprender -->
-    <section class="aprender">
-        <div class="container">
-            <h2>O Que Você Vai Aprender</h2>
-            <div class="modulos">
-                <div class="modulo">
-                    <h3>📡 Módulo 1: Fundamentos do Arduino Automotivo</h3>
-                    <p>Entenda como funciona a comunicação entre o Arduino e o carro, sem enrolação. Do zero ao funcionamento.</p>
-                </div>
-                
-                <div class="modulo">
-                    <h3>🔌 Módulo 2: Conexão com o Veículo</h3>
-                    <p>Aprenda a conectar o Arduino ao carro e capturar dados em tempo real (OBD2 e conexão direta).</p>
-                </div>
-                
-                <div class="modulo">
-                    <h3>📱 Módulo 3: Configuração do RealDash</h3>
-                    <p>Configure o aplicativo RealDash para criar interfaces modernas e totalmente personalizadas.</p>
-                </div>
-                
-                <div class="modulo">
-                    <h3>📊 Módulo 4: Leitura de Dados do Motor</h3>
-                    <p>Visualize RPM, temperatura da água, tensão da bateria, velocidade e muito mais em tempo real.</p>
-                </div>
-                
-                <div class="modulo">
-                    <h3>🎨 Módulo 5: Personalização Completa</h3>
-                    <p>Customize cores, layouts e informações exibidas. Deixe do seu jeito!</p>
-                </div>
-                
-                <div class="modulo">
-                    <h3>🚗 Módulo 6: Adaptação para Diferentes Carros</h3>
-                    <p>Dicas práticas para adaptar o projeto ao Uno, Gol, Palio, Ka, Corsa e outros modelos populares.</p>
-                </div>
-                
-                <div class="modulo">
-                    <h3>🔧 Módulo 7: Instalação Física Profissional</h3>
-                    <p>Aprenda a instalar o sistema de forma limpa, segura e com acabamento profissional.</p>
-                </div>
-                
-                <div class="modulo">
-                    <h3>💰 BÔNUS: Como Monetizar Esse Conhecimento</h3>
-                    <p>Use o que aprendeu para montar painéis e vender como serviço personalizado na sua região!</p>
-                </div>
-            </div>
-        </div>
-    </section>
+<!-- DIFERENCIAIS -->
+<section>
+  <div class="section-inner">
+    <div class="section-label">Por que aqui</div>
+    <h2 class="section-title">Não é produto genérico de importado</h2>
+    <p class="section-sub">Desenvolvido por quem abriu o protocolo do ECU Fiat na mão.</p>
 
-    <!-- Para quem é -->
-    <section class="para-quem">
-        <div class="container">
-            <h2>Este Curso É Para Você?</h2>
-            <div class="para-quem-grid">
-                <div class="para-quem-box para-quem-sim">
-                    <h3>✅ ESTE CURSO É PARA VOCÊ SE:</h3>
-                    <ul>
-                        <li>Tem um Uno, Gol, Palio, Ka ou carro similar</li>
-                        <li>Quer economizar R$ 2.000+ em mão de obra</li>
-                        <li>Nunca mexeu com Arduino (ensino do ZERO)</li>
-                        <li>Tem um final de semana livre para o projeto</li>
-                        <li>Gosta de aprender fazendo (método prático)</li>
-                        <li>Quer ter autonomia para modificar seu carro</li>
-                        <li>Sonha em ter um painel digital moderno</li>
-                    </ul>
-                </div>
-                
-                <div class="para-quem-box para-quem-nao">
-                    <h3>❌ NÃO É PARA VOCÊ SE:</h3>
-                    <ul>
-                        <li>Quer algo plug-and-play 100% pronto</li>
-                        <li>Não tem paciência para aprender</li>
-                        <li>Quer modificar carros muito modernos (2015+)</li>
-                        <li>Não está disposto a investir ~R$100 em peças</li>
-                        <li>Procura um curso de mecânica avançada</li>
-                        <li>Espera resultados sem colocar a mão na massa</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
+    <div class="diff-grid">
+      <div class="diff-item">
+        <div class="diff-icon">🔬</div>
+        <div class="diff-title">Protocolo real</div>
+        <div class="diff-text">K-Line/KWP2000 reverse engineered diretamente do ECU IAW4GF/IAW4AFB do Uno. Sem adaptadores genéricos.</div>
+      </div>
+      <div class="diff-item">
+        <div class="diff-icon">🚗</div>
+        <div class="diff-title">Testado no carro</div>
+        <div class="diff-text">Todo produto roda em Fiat Uno real antes de sair. Não é bancada, não é simulação.</div>
+      </div>
+      <div class="diff-item">
+        <div class="diff-icon">🎥</div>
+        <div class="diff-title">Veja antes de comprar</div>
+        <div class="diff-text">Canal no YouTube com demonstrações reais dos produtos funcionando. Nada escondido.</div>
+      </div>
+      <div class="diff-item">
+        <div class="diff-icon">🛠️</div>
+        <div class="diff-title">30 anos de experiência</div>
+        <div class="diff-text">Eletrônica automotiva e embarcada desde os anos 90. MEI ativo em Goianinha/RN.</div>
+      </div>
+      <div class="diff-item">
+        <div class="diff-icon">📞</div>
+        <div class="diff-title">Suporte direto</div>
+        <div class="diff-text">180 dias de garantia contra defeito de fabricação. Atendimento direto no WhatsApp, sem ticket de suporte.</div>
+      </div>
+      <div class="diff-item">
+        <div class="diff-icon">🇧🇷</div>
+        <div class="diff-title">Envio nacional</div>
+        <div class="diff-text">Correios para todo o Brasil. Produto ou serviço remoto, a gente resolve a distância.</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- Investimento -->
-    <section class="investimento" id="investimento">
-        <div class="container">
-            <h2>Quanto Custa Transformar Seu Carro?</h2>
-            
-            <div class="price-box">
-                <p style="font-size: 20px; margin-bottom: 20px;">
-                    💸 Nas oficinas: <strong>R$ 2.000 a R$ 3.500</strong><br>
-                    (Instalação + mão de obra)
-                </p>
-                
-                <p style="font-size: 18px; opacity: 0.9;">Valor normal do curso:</p>
-                <div class="old-price">R$ 497,00</div>
-                
-                <p style="font-size: 22px; margin-top: 30px;">
-                    <strong>PREÇO ESPECIAL para os 20 primeiros:</strong>
-                </p>
-                <div class="new-price">
-                    <small>R$</small> 297<small>,00</small>
-                </div>
-                
-                <div class="economia">🔥 ECONOMIA DE 40%!</div>
-                
-                <p style="font-size: 18px; margin-top: 30px;">
-                    + Investimento em peças: <strong>~R$ 100,00</strong><br>
-                    <small>(Lista completa de onde comprar incluída)</small>
-                </p>
-            </div>
-            
-            <h3 style="font-size: 28px; margin: 40px 0 20px;">🎁 Bônus Exclusivos Inclusos:</h3>
-            <ul class="bonus-list">
-                <li>Código-fonte 100% pronto (copiar e colar)</li>
-                <li>Esquemas elétricos detalhados em PDF</li>
-                <li>Lista completa de peças com links para compra</li>
-                <li>Suporte direto comigo por 30 dias</li>
-                <li>Acesso vitalício ao conteúdo e atualizações</li>
-                <li>Grupo exclusivo no WhatsApp com outros alunos</li>
-            </ul>
-            
-            <a href="https://pay.kiwify.com.br/Ua3ZJfu" class="cta-button" style="background: #FFD700; color: #333;">
-                💳 GARANTIR MINHA VAGA AGORA - R$ 297
-            </a>
-            
-            <p class="cta-subtext">
-                ⚠️ Apenas <strong>20 vagas</strong> disponíveis | Encerra 31/10/2025<br>
-                🔒 Pagamento 100% seguro via Kiwify
-            </p>
-        </div>
-    </section>
+<hr class="divider">
 
-    <!-- Garantia -->
-    <section class="garantia">
-        <div class="container">
-            <div class="garantia-box">
-                <div class="garantia-icon">🛡️</div>
-                <h2>Garantia Incondicional de 7 Dias</h2>
-                <p style="font-size: 18px; line-height: 1.8;">
-                    Se por QUALQUER motivo você não gostar do curso, tem <strong>7 dias para pedir 100% do seu dinheiro de volta</strong>. Sem perguntas, sem burocracia.<br><br>
-                    Você não corre NENHUM risco!
-                </p>
-            </div>
-        </div>
-    </section>
+<!-- COMPATIBILIDADE -->
+<section id="compatibilidade" style="background:var(--bg2);">
+  <div class="section-inner">
+    <div class="section-label">Compatibilidade</div>
+    <h2 class="section-title">Modelos e anos atendidos</h2>
+    <p class="section-sub">Os produtos são desenvolvidos para a plataforma Fiat Uno Fire/Economy. Consulte via WhatsApp se tiver dúvida sobre o seu modelo específico.</p>
 
-    <!-- FAQ -->
-    <section class="faq">
-        <div class="container">
-            <h2>Perguntas Frequentes</h2>
-            <div class="faq-container">
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFaq(this)">
-                        Preciso saber programar?
-                        <span>+</span>
-                    </div>
-                    <div class="faq-answer">
-                        NÃO! O curso é feito para iniciantes totais. Você vai receber o código 100% pronto, basta copiar e colar.
-						Explico cada linha do código de forma simples para você entender o que está fazendo, mas ZERO necessidade de experiência prévia em programação.
-                    </div>
-                </div>
-                
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFaq(this)">
-                        Posso danificar meu carro?
-                        <span>+</span>
-                    </div>
-                    <div class="faq-answer">
-                        NÃO! Ensino exatamente como fazer as conexões de forma segura. O projeto não interfere na eletrônica original do carro - apenas lê informações.
-                    </div>
-                </div>
-                
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFaq(this)">
-                        Tenho suporte se travar em alguma etapa?
-                        <span>+</span>
-                    </div>
-                    <div class="faq-answer">
-                        SIM! Você terá 30 dias de suporte direto comigo via WhatsApp + acesso ao grupo exclusivo com outros alunos.
-                    </div>
-                </div>
-                
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFaq(this)">
-                        Por quanto tempo tenho acesso?
-                        <span>+</span>
-                    </div>
-                    <div class="faq-answer">
-                        Acesso VITALÍCIO! Você pode assistir quantas vezes quiser, para sempre. E recebe todas as atualizações futuras de graça.
-                    </div>
-                </div>
-                
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFaq(this)">
-                        E se eu não gostar do curso?
-                        <span>+</span>
-                    </div>
-                    <div class="faq-answer">
-                        Você tem 7 dias de garantia incondicional. Se não gostar por QUALQUER motivo, devolvemos 100% do seu dinheiro. Simples assim!
-                    </div>
-                </div>
-                
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFaq(this)">
-                        Posso usar isso profissionalmente?
-                        <span>+</span>
-                    </div>
-                    <div class="faq-answer">
-                        COM CERTEZA! Muitos alunos começam a oferecer esse serviço na região deles e cobram R$ 500-800 por instalação. É uma ótima fonte de renda extra!
-                    </div>
-                </div>
-				  <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFaq(this)">
-                        Funciona no meu carro?
-                        <span>+</span>
-                    </div>
-                    <div class="faq-answer">
-                        Funciona perfeitamente em carros com injeção eletrônica fabricados entre 1996-2014, como Uno, Gol, Palio, Ka, Corsa, Celta e similares. Para carros mais modernos, entre em contato.
-                    </div>
-                </div>
-				<div class="faq-item">
-                    <div class="faq-question" onclick="toggleFaq(this)">
-                        Em quanto tempo consigo montar?
-                        <span>+</span>
-                    </div>
-                    <div class="faq-answer">
-					    A maioria dos alunos consegue montar em um final de semana (6-8 horas de trabalho total).
-						Se você já tem alguma experiência com eletrônica, pode fazer em 4-5 horas.
-						O importante é seguir o passo a passo com calma e atenção.
-                    </div>
-                </div>
-				<div class="faq-item">
-                    <div class="faq-question" onclick="toggleFaq(this)">
-                        Quanto custa o material?
-                        <span>+</span>
-                    </div>
-                    <div class="faq-answer">
-                        O investimento total em peças é de aproximadamente R$ 100. Fornecemos a lista completa com links para comprar tudo online.
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <div class="compat">
+      <div class="compat-title">Fiat Uno — anos compatíveis</div>
+      <div class="compat-list">
+        <span class="compat-tag">Uno Fire 2005</span>
+        <span class="compat-tag">Uno Fire 2006</span>
+        <span class="compat-tag">Uno Fire 2007</span>
+        <span class="compat-tag">Uno Fire 2008</span>
+        <span class="compat-tag">Uno Economy 2009</span>
+        <span class="compat-tag">Uno Economy 2010</span>
+        <span class="compat-tag">Uno Economy 2011</span>
+        <span class="compat-tag">Uno Economy 2012</span>
+        <span class="compat-tag">Uno Economy 2013</span>
+      </div>
+    </div>
 
-    <!-- CTA Final -->
-    <section class="footer-cta">
-        <div class="container">
-            <h2>Pronto Para Transformar Seu Carro?</h2>
-            <p style="font-size: 22px; margin-bottom: 30px;">
-                Junte-se aos <strong>20 pioneiros</strong> que vão dominar<br>
-                a eletrônica automotiva com Arduino + RealDash
-            </p>
-            
-            <div class="urgency-box">
-                <h3>⏰ ÚLTIMA CHANCE!</h3>
-                <div class="urgency-item">🔥 Restam apenas <strong>20 vagas</strong></div>
-                <div class="urgency-item">📅 Oferta encerra: <strong>31/10/2025</strong></div>
-                <div class="urgency-item">💰 De R$ 497 por apenas <strong>R$ 297</strong></div>
-            </div>
-            
-            <a href="https://pay.kiwify.com.br/Ua3ZJfu" class="cta-button" style="background: #FFD700; color: #333;">
-                🚀 GARANTIR MINHA VAGA AGORA
-            </a>
-            
-            <p class="cta-subtext">
-                ✅ Acesso imediato após a confirmação do pagamento<br>
-                🔒 Ambiente 100% seguro | 🛡️ Garantia de 7 dias
-            </p>
-            
-            <div style="margin-top: 50px; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.3);">
-                <p style="font-size: 16px; opacity: 0.9;">
-                    Criado por <strong>Sergyo Eletrônico</strong><br>
-                    📱 WhatsApp: <a href="https://chat.whatsapp.com/IbmfPZq3nUBK4gGGZwoNqw?mode=wwc" style="color: #FFD700;">(84) 99640-2534</a><br>
-                    📧 Email: sergyoeletronic@gmail.com
-                </p>
-            </div>
-        </div>
-    </section>
+    <div class="compat" style="margin-top:12px;">
+      <div class="compat-title">Painéis compatíveis com o serviço de modificação</div>
+      <div class="compat-list">
+        <span class="compat-tag">Painel Economy sem RPM</span>
+        <span class="compat-tag">Painel Fire sem RPM</span>
+      </div>
+    </div>
 
-    <script>
-        function toggleFaq(element) {
-            const answer = element.nextElementSibling;
-            const icon = element.querySelector('span');
-            
-            // Fecha todas as outras respostas
-            document.querySelectorAll('.faq-answer').forEach(item => {
-                if (item !== answer) {
-                    item.classList.remove('active');
-                    item.previousElementSibling.querySelector('span').textContent = '+';
-                }
-            });
-            
-            // Toggle da resposta clicada
-            answer.classList.toggle('active');
-            icon.textContent = answer.classList.contains('active') ? '−' : '+';
-        }
-        
-        // Smooth scroll para âncoras
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-        
-        // Contador regressivo simples (opcional)
-        function updateCountdown() {
-            const deadline = new Date('2025-10-31T23:59:59');
-            const now = new Date();
-            const diff = deadline - now;
-            
-            if (diff > 0) {
-                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                
-                const countdownElements = document.querySelectorAll('.urgency-item');
-                countdownElements.forEach(el => {
-                    if (el.textContent.includes('Encerra em')) {
-                        el.innerHTML = `⏰ Encerra em: <strong>${days}d ${hours}h ${minutes}min</strong>`;
-                    }
-                });
-            }
-        }
-        
-        // Atualiza o countdown a cada minuto
-        updateCountdown();
-        setInterval(updateCountdown, 60000);
-    </script>
-</body>               
-                        
+    <p style="font-size:13px;color:var(--text-dim);margin-top:16px;">Para Fiat Uno Vivace (2014+) ou outros modelos, entre em contato para avaliar compatibilidade.</p>
+  </div>
+</section>
 
+<hr class="divider">
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="section-inner">
+    <div class="section-label">Dúvidas frequentes</div>
+    <h2 class="section-title" style="margin-bottom:32px;">Perguntas comuns</h2>
+
+    <div class="faq-list">
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          O painel com conta-giro é igual ao original tipo exportação?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">Visualmente muito parecido e funcionalmente equivalente. A diferença é que o original tipo exportação custa R$ 1.200+ e é raro de encontrar. O nosso é um Economy reconfigurado com o mesmo resultado prático a R$ 850, ou R$ 350 no serviço remoto com seu próprio painel.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Preciso levar na oficina para instalar?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">O painel em si é plug-and-play — você troca como qualquer painel. O único passo extra é puxar um fio de sinal de RPM até a bobina de ignição. Enviamos um guia com foto e diagrama. Qualquer eletricista automotivo faz em 30 minutos se você não quiser fazer.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          O computador de bordo funciona com a injeção original do Uno?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">Sim. O OBC se comunica diretamente via K-Line com o ECU original do Uno Fire/Economy, sem nenhum adaptador intermediário. Lê os dados do motor como temperatura, RPM, tensão e velocidade em tempo real.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          O módulo LIN-FI funciona com qualquer rádio Android?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">Funciona com rádios Android 2 DIN que suportam o protocolo Raise VW Canbox, que é o padrão mais comum no mercado. Consulte no WhatsApp antes de comprar informando o modelo do seu rádio para confirmar.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Tem garantia nos produtos?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">Sim. 180 dias de garantia contra defeito de fabricação. Qualquer problema, você entra em contato direto no WhatsApp e a gente resolve. Produtos com dano por instalação incorreta não estão cobertos, mas a gente ajuda a diagnosticar.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Posso ver os produtos funcionando antes de comprar?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">Sim. O canal do YouTube @sergyoeletronico tem vídeos dos produtos em funcionamento no carro. É a melhor forma de ver antes de decidir.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- CTA FINAL -->
+<section style="background:var(--bg2);">
+  <div class="section-inner">
+    <div class="cta-final">
+      <div class="section-label" style="justify-content:center;display:flex;">Fale com a gente</div>
+      <h2>Pronto para modernizar seu Uno?</h2>
+      <p>Manda uma mensagem no WhatsApp com o ano e versão do seu Uno. A gente indica o produto certo e tira todas as dúvidas antes de você comprar.</p>
+      <a href="https://wa.me/5584996402534?text=Olá Sergyo, quero saber sobre os upgrades para o meu Fiat Uno" target="_blank" rel="noopener" class="btn-whatsapp" style="font-size:16px;padding:16px 36px;">
+        💬 Chamar no WhatsApp
+      </a>
+      <div class="cta-contacts">
+        <span class="contact-item">📱 (84) 99640-2534</span>
+        <span class="contact-item">📧 sergyoeletronic@gmail.com</span>
+        <span class="contact-item"><a href="https://youtube.com/@sergyoeletronico" target="_blank" rel="noopener" style="color:var(--text-muted);">▶ YouTube @sergyoeletronico</a></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p style="margin-bottom:6px;"><strong style="color:var(--text-muted);">Sergyo Eletrônico</strong> · Goianinha/RN · MEI · desde 2015</p>
+  <p>Especialista em eletrônica automotiva e embarcada desde 1994 &nbsp;·&nbsp; <a href="https://youtube.com/@sergyoeletronico" target="_blank" rel="noopener">YouTube</a> &nbsp;·&nbsp; <a href="https://wa.me/5584996402534" target="_blank" rel="noopener">WhatsApp</a></p>
+</footer>
+
+<script>
+function toggleFaq(btn){
+  const ans=btn.nextElementSibling;
+  const icon=btn.querySelector('.faq-icon');
+  const open=ans.classList.contains('open');
+  document.querySelectorAll('.faq-a.open').forEach(a=>{
+    a.classList.remove('open');
+    a.previousElementSibling.querySelector('.faq-icon').classList.remove('open');
+    a.previousElementSibling.querySelector('.faq-icon').textContent='+';
+  });
+  if(!open){
+    ans.classList.add('open');
+    icon.classList.add('open');
+    icon.textContent='+';
+  }
+}
+</script>
+</body>
+</html>
