@@ -1,0 +1,548 @@
+<title>Painel Digital RealDash</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+  :root{
+    --bg:#0a0d12;
+    --surface:#12161d;
+    --surface-2:#1a1f28;
+    --line:#242b36;
+    --text:#e9edf3;
+    --text-dim:#8a96a8;
+    --accent:#2fb8ff;
+    --accent-dim:#1c6e94;
+    --cta:#ff4433;
+    --cta-dim:#7a2018;
+    --warn:#f2a33d;
+    --warn-dim:#6b4a1e;
+    --ok:#4ade80;
+  }
+
+  @media (prefers-color-scheme: light){
+    :root:not([data-theme="light"]){
+      --bg:#f3f1ea;
+      --surface:#ffffff;
+      --surface-2:#eae6da;
+      --line:#d8d2c2;
+      --text:#161a20;
+      --text-dim:#5a6270;
+      --accent:#0c7fb5;
+      --accent-dim:#bfe6f7;
+      --cta:#d33b1e;
+      --cta-dim:#f6d2c4;
+      --warn:#b5751a;
+      --warn-dim:#f2e2c2;
+      --ok:#17864f;
+    }
+  }
+  :root[data-theme="light"]{
+    --bg:#f3f1ea;
+    --surface:#ffffff;
+    --surface-2:#eae6da;
+    --line:#d8d2c2;
+    --text:#161a20;
+    --text-dim:#5a6270;
+    --accent:#0c7fb5;
+    --accent-dim:#bfe6f7;
+    --cta:#d33b1e;
+    --cta-dim:#f6d2c4;
+    --warn:#b5751a;
+    --warn-dim:#f2e2c2;
+    --ok:#17864f;
+  }
+  :root[data-theme="dark"]{
+    --bg:#0a0d12;
+    --surface:#12161d;
+    --surface-2:#1a1f28;
+    --line:#242b36;
+    --text:#e9edf3;
+    --text-dim:#8a96a8;
+    --accent:#2fb8ff;
+    --accent-dim:#1c6e94;
+    --cta:#ff4433;
+    --cta-dim:#7a2018;
+    --warn:#f2a33d;
+    --warn-dim:#6b4a1e;
+    --ok:#4ade80;
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'IBM Plex Sans',system-ui,sans-serif;
+    line-height:1.55;
+  }
+  h1,h2,h3{
+    font-family:'Rajdhani',system-ui,sans-serif;
+    font-weight:700;
+    letter-spacing:.01em;
+    text-wrap:balance;
+    margin:0;
+  }
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  a{color:inherit;}
+  img{max-width:100%;}
+
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px;}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--accent);
+  }
+
+  /* ---------- NAV ---------- */
+  .topbar{
+    border-bottom:1px solid var(--line);
+    padding:16px 0;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:16px;flex-wrap:wrap;
+  }
+  .brand{
+    font-family:'Rajdhani',sans-serif;font-weight:700;font-size:19px;
+    display:flex;align-items:center;gap:8px;
+  }
+  .brand .dot{width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);}
+  .topbar .price-chip{
+    font-family:'IBM Plex Mono',monospace;font-size:13px;
+    border:1px solid var(--line);border-radius:5px;padding:6px 12px;color:var(--text-dim);
+  }
+  .topbar .price-chip b{color:var(--cta);}
+
+  /* ---------- HERO ---------- */
+  .hero{padding:56px 0 40px;}
+  .hero-grid{
+    display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center;
+  }
+  @media (max-width:820px){.hero-grid{grid-template-columns:1fr;}}
+  .hero h1{font-size:clamp(32px,4.4vw,50px);line-height:1.06;}
+  .hero h1 span{color:var(--accent);}
+  .hero p.lede{color:var(--text-dim);font-size:17px;max-width:52ch;margin-top:16px;}
+  .hero-facts{
+    display:flex;gap:22px;flex-wrap:wrap;margin-top:24px;
+    font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--text-dim);
+  }
+  .hero-facts b{color:var(--text);font-weight:600;}
+  .cta-row{display:flex;gap:14px;align-items:center;margin-top:28px;flex-wrap:wrap;}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--cta);color:#fff;
+    font-family:'Rajdhani',sans-serif;font-weight:700;font-size:17px;letter-spacing:.02em;
+    padding:14px 26px;border-radius:6px;text-decoration:none;
+    box-shadow:0 0 0 1px var(--cta-dim) inset;
+  }
+  .btn:focus-visible{outline:3px solid var(--accent);outline-offset:2px;}
+  .btn.ghost{
+    background:transparent;color:var(--text);border:1px solid var(--line);
+    box-shadow:none;font-weight:600;font-size:14px;padding:13px 20px;
+  }
+  .price-note{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text-dim);}
+
+  /* ---------- GAUGE ---------- */
+  .gauge-card{
+    background:var(--surface);border:1px solid var(--line);border-radius:14px;
+    padding:22px 22px 18px;text-align:center;
+  }
+  .gauge-card svg{display:block;margin:0 auto;}
+  .gauge-readout{
+    font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--text-dim);
+    letter-spacing:.12em;text-transform:uppercase;margin-top:6px;
+  }
+
+  /* ---------- SECTION SHELL ---------- */
+  section{padding:52px 0;border-top:1px solid var(--line);}
+  .section-head{max-width:62ch;margin-bottom:30px;}
+  .section-head h2{font-size:clamp(24px,3vw,32px);margin-top:8px;}
+  .section-head p{color:var(--text-dim);margin-top:10px;}
+
+  /* ---------- DOR / PROMESSA ---------- */
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  @media (max-width:760px){.two-col{grid-template-columns:1fr;}}
+  .panel{
+    background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:22px 24px;
+  }
+  .panel h3{font-size:18px;margin-bottom:12px;}
+  .panel ul{margin:0;padding-left:18px;color:var(--text-dim);}
+  .panel li{margin-bottom:8px;}
+  .panel.warn{border-color:var(--warn-dim);}
+  .panel.ok{border-color:var(--accent-dim);}
+  .panel.warn h3{color:var(--warn);}
+  .panel.ok h3{color:var(--accent);}
+
+  /* ---------- O QUE VOCE CONSTROI ---------- */
+  .feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;}
+  @media (max-width:520px){.feature-grid{grid-template-columns:1fr;}}
+  .feature{
+    background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;
+  }
+  .feature .tag{
+    font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);
+    letter-spacing:.1em;text-transform:uppercase;
+  }
+  .feature h4{font-family:'Rajdhani',sans-serif;font-size:19px;font-weight:600;margin:6px 0 6px;}
+  .feature p{color:var(--text-dim);font-size:14px;margin:0;}
+
+  /* ---------- TIMELINE / GRADE ---------- */
+  .timeline{display:flex;flex-direction:column;gap:0;}
+  .stage{
+    display:grid;grid-template-columns:96px 1fr;gap:20px;
+    border-left:2px solid var(--line);padding:0 0 34px 24px;position:relative;margin-left:8px;
+  }
+  .stage:last-child{padding-bottom:2px;}
+  .stage::before{
+    content:'';position:absolute;left:-7px;top:2px;width:12px;height:12px;border-radius:50%;
+    background:var(--accent);box-shadow:0 0 0 4px var(--surface);
+  }
+  .stage .day{
+    font-family:'IBM Plex Mono',monospace;color:var(--accent);font-size:13px;padding-top:2px;
+  }
+  .stage-body h3{font-size:19px;margin-bottom:4px;}
+  .stage-body .modulo-label{
+    font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--text-dim);
+    text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;display:block;
+  }
+  .stage-body ul{margin:0;padding-left:18px;color:var(--text-dim);font-size:14.5px;}
+  .stage-body li{margin-bottom:5px;}
+
+  /* ---------- PARA QUEM ---------- */
+  .fit-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  @media (max-width:760px){.fit-grid{grid-template-columns:1fr;}}
+
+  /* ---------- EM BREVE ---------- */
+  .soon-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+  @media (max-width:860px){.soon-grid{grid-template-columns:1fr;}}
+  .soon-card{
+    background:var(--surface);border:1px dashed var(--line);border-radius:10px;padding:20px;
+    display:flex;flex-direction:column;gap:10px;
+  }
+  .soon-card .eyebrow{color:var(--text-dim);}
+  .soon-card h4{font-family:'Rajdhani',sans-serif;font-size:19px;font-weight:600;}
+  .soon-card p{color:var(--text-dim);font-size:14px;flex:1;}
+  .soon-card a{
+    font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--accent);text-decoration:none;
+    border:1px solid var(--accent-dim);border-radius:6px;padding:9px 12px;text-align:center;
+  }
+
+  /* ---------- FAQ ---------- */
+  details{
+    border-bottom:1px solid var(--line);padding:16px 0;
+  }
+  details summary{
+    cursor:pointer;font-family:'Rajdhani',sans-serif;font-weight:600;font-size:17px;
+    list-style:none;display:flex;justify-content:space-between;align-items:center;
+  }
+  details summary::-webkit-details-marker{display:none;}
+  details summary::after{content:'+';font-family:'IBM Plex Mono',monospace;color:var(--accent);font-size:20px;}
+  details[open] summary::after{content:'\2212';}
+  details p{color:var(--text-dim);margin-top:10px;font-size:15px;max-width:65ch;}
+
+  /* ---------- PRICE / GARANTIA ---------- */
+  .price-block{
+    background:var(--surface);border:1px solid var(--line);border-radius:14px;
+    padding:36px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;
+  }
+  @media (max-width:700px){.price-block{grid-template-columns:1fr;text-align:center;}}
+  .price-block .big{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:44px;color:var(--cta);}
+  .price-block .compare{color:var(--text-dim);font-size:14px;margin-top:6px;}
+  .guarantee{
+    display:flex;gap:10px;align-items:flex-start;margin-top:18px;color:var(--text-dim);font-size:13.5px;
+  }
+  .guarantee .ok-dot{color:var(--ok);font-weight:700;}
+
+  footer{border-top:1px solid var(--line);padding:36px 0 48px;}
+  .foot-grid{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;color:var(--text-dim);font-size:13.5px;}
+  .foot-grid a{color:var(--text-dim);text-decoration:none;}
+  .foot-grid a:hover{color:var(--accent);}
+</style>
+
+<div class="topbar">
+  <div class="wrap" style="display:flex;align-items:center;justify-content:space-between;width:100%;flex-wrap:wrap;gap:12px;">
+    <div class="brand"><span class="dot"></span> Sergyo Eletrônico</div>
+    <div class="price-chip">Painel Digital RealDash · <b>R$497</b></div>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="eyebrow">Curso prático · Fiat Uno &amp; Palio</p>
+      <h1>Seu carro já fala.<br>Ensina seu painel a <span>escutar</span>.</h1>
+      <p class="lede">Monte, com suas próprias mãos, um computador de bordo digital com ESP32 e RealDash — lendo RPM, temperatura e velocidade direto dos sensores do seu Uno ou Palio, sem depender de protocolo fechado de fábrica.</p>
+      <div class="hero-facts">
+        <span><b>8 dias</b> de conteúdo guiado</span>
+        <span><b>4</b> projetos reais de alunos como referência</span>
+        <span><b>ESP32 + RealDash</b>, sem mensalidade de software</span>
+        <span><b>Display flexível</b>: celular/tablet ou LCD 16x2/20x4 I2C</span>
+      </div>
+      <div class="cta-row">
+        <a class="btn" href="https://pay.kiwify.com.br/Ua3ZJfu">Garantir minha vaga — R$497</a>
+        <a class="btn ghost" href="#grade">Ver o conteúdo</a>
+      </div>
+      <p class="price-note">Pagamento único · checkout seguro via Kiwify</p>
+    </div>
+
+    <div class="gauge-card">
+      <svg width="300" height="190" viewBox="0 0 300 190" role="img" aria-label="Mostrador estilo tacômetro indicando o preço do curso e os 8 módulos">
+        <path d="M30,150 A120,120 0 0 0 270,150" fill="none" stroke="var(--line)" stroke-width="10" stroke-linecap="round"/>
+        <path d="M195.9,39.1 A120,120 0 0 0 270,150" fill="none" stroke="var(--cta)" stroke-width="10" stroke-linecap="round" opacity="0.55"/>
+        <g fill="var(--text-dim)" font-family="IBM Plex Mono, monospace" font-size="11" text-anchor="middle">
+          <text x="30" y="168">1</text>
+          <text x="65.2" y="80.2">2</text>
+          <text x="150" y="26">4</text>
+          <text x="234.9" y="80.2">6</text>
+          <text x="270" y="168">8</text>
+        </g>
+        <text x="150" y="182" text-anchor="middle" fill="var(--text-dim)" font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="1.5">MÓDULOS DO CURSO</text>
+        <line x1="150" y1="150" x2="248" y2="118" stroke="var(--cta)" stroke-width="4" stroke-linecap="round"/>
+        <circle cx="150" cy="150" r="8" fill="var(--cta)"/>
+        <rect x="108" y="98" width="84" height="30" rx="4" fill="var(--surface-2)" stroke="var(--line)"/>
+        <text x="150" y="118" text-anchor="middle" fill="var(--accent)" font-family="IBM Plex Mono, monospace" font-size="17" font-weight="700">R$497</text>
+      </svg>
+      <p class="gauge-readout">8 módulos · projeto completo até o painel rodando no carro</p>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">O problema</p>
+      <h2>Painel de fábrica mostra pouco. Painel pronto custa caro e não ensina nada.</h2>
+    </div>
+    <div class="two-col">
+      <div class="panel warn">
+        <h3>Sem o curso</h3>
+        <ul>
+          <li>O painel original do Uno/Palio não mostra conta-giro digital, temperatura real ou dados de injeção.</li>
+          <li>Um computador de bordo pronto custa a partir de R$540 e você fica na mão de quem instalou — qualquer ajuste, é chamado técnico de novo.</li>
+          <li>Cursos genéricos de Arduino/ESP32 não ensinam a parte automotiva: qual fio, qual sensor, como tratar o sinal do seu carro específico.</li>
+        </ul>
+      </div>
+      <div class="panel ok">
+        <h3>Com o curso</h3>
+        <ul>
+          <li>Você monta o próprio painel, sabendo exatamente o que cada sensor e cada fio faz.</li>
+          <li>Pagamento único de R$497 — sem depender de terceiros para manter ou expandir o sistema.</li>
+          <li>Conteúdo específico para Uno e Palio, com projetos reais de outros alunos como referência de montagem.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">O que você constrói</p>
+      <h2>Um painel digital funcional, lendo dados reais do seu carro</h2>
+      <p>Sem depender de PIDs proprietários escondidos na ECU: sinal direto dos sensores sempre que possível, e PIDs padrão de mercado quando a leitura é via porta K-line.</p>
+    </div>
+    <div class="feature-grid">
+      <div class="feature">
+        <span class="tag">RPM</span>
+        <h4>Conta-giro digital</h4>
+        <p>Leitura em tempo real via sensor de rotação, exibida como widget no RealDash.</p>
+      </div>
+      <div class="feature">
+        <span class="tag">Temperatura</span>
+        <h4>Temperatura do motor</h4>
+        <p>Captação direta do sensor original, sem depender de protocolo da ECU.</p>
+      </div>
+      <div class="feature">
+        <span class="tag">Velocidade</span>
+        <h4>Velocímetro digital</h4>
+        <p>Sinal do sensor de velocidade processado pelo ESP32 e enviado ao painel.</p>
+      </div>
+      <div class="feature">
+        <span class="tag">RealDash</span>
+        <h4>Widgets prontos, sem programar layout</h4>
+        <p>Use os widgets que já vêm no RealDash — sem precisar criar personalização do zero.</p>
+      </div>
+      <div class="feature">
+        <span class="tag">Display</span>
+        <h4>Celular/tablet ou LCD dedicado</h4>
+        <p>Rode no RealDash pelo celular, ou use um display físico 16x2 ou 20x4 via I2C se preferir um painel sem depender de aparelho.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="grade">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Grade do curso · liberação por dias</p>
+      <h2>8 dias, do zero ao painel rodando no carro</h2>
+      <p>Conteúdo liberado em etapas para você não travar sozinho — cada módulo assume o anterior concluído.</p>
+    </div>
+    <div class="timeline">
+      <div class="stage">
+        <div class="day">DIA 1</div>
+        <div class="stage-body">
+          <span class="modulo-label">Módulos 1-2</span>
+          <h3>Fundamentos e ambiente</h3>
+          <ul>
+            <li>O que é um computador de bordo e visão geral do RealDash</li>
+            <li>Apresentação dos componentes do projeto, incluindo o Arduino Nano</li>
+            <li>Instalando as ferramentas e configurando o hardware</li>
+            <li>Primeiros testes no ESP32</li>
+          </ul>
+        </div>
+      </div>
+      <div class="stage">
+        <div class="day">DIA 2-5</div>
+        <div class="stage-body">
+          <span class="modulo-label">Módulos 3-4</span>
+          <h3>Conexões, hardware e painel no RealDash</h3>
+          <ul>
+            <li>Conexões e hardware do projeto</li>
+            <li>Alternativa com display físico LCD 16x2 ou 20x4 via I2C, para quem não quer depender de celular/tablet</li>
+            <li>Instalação e configuração inicial do RealDash</li>
+            <li>Criando o painel básico e configurando fontes de dados (XML)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="stage">
+        <div class="day">DIA 5-7</div>
+        <div class="stage-body">
+          <span class="modulo-label">Módulos 5-7</span>
+          <h3>Sensores e dados em tempo real</h3>
+          <ul>
+            <li>Usando os widgets prontos do RealDash — sem precisar criar personalização do zero</li>
+            <li>Comunicação com sensores e configuração do arquivo XML</li>
+            <li>Processamento de dados e envio para o RealDash</li>
+          </ul>
+        </div>
+      </div>
+      <div class="stage">
+        <div class="day">DIA 8</div>
+        <div class="stage-body">
+          <span class="modulo-label">Módulo 8 + extras</span>
+          <h3>Montagem final e projetos reais</h3>
+          <ul>
+            <li>Montagem completa do sistema e teste no veículo</li>
+            <li>Dicionário de termos técnicos (eletrônica, Arduino/ESP32, sensores automotivos)</li>
+            <li>Projetos de referência: Fiat Uno 2008, Fiat Uno 2002, Palio Weekend 2003, Palio 2002 1.0 16v</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Para quem é</p>
+      <h2>Antes de garantir sua vaga</h2>
+    </div>
+    <div class="fit-grid">
+      <div class="panel ok">
+        <h3>Feito para você se</h3>
+        <ul>
+          <li>Tem um Fiat Uno ou Palio (ou projeto parecido) e quer meter a mão.</li>
+          <li>Prefere entender o que está fazendo a depender de terceiros.</li>
+          <li>Topa seguir um passo a passo de 8 dias, no seu ritmo.</li>
+        </ul>
+      </div>
+      <div class="panel warn">
+        <h3>Não é pra você se</h3>
+        <ul>
+          <li>Quer o painel pronto sem aprender nada — nesse caso, veja o computador de bordo já montado no site.</li>
+          <li>Nunca ligou um Arduino/ESP32 e quer começar do zero absoluto — aguarde o curso de introdução (abaixo).</li>
+          <li>Precisa de PIDs proprietários de outras marcas — isso fica para o curso avançado de protocolos.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Depois do painel básico</p>
+      <h2>Em breve: para quem quer ir além</h2>
+      <p>Ainda não estão prontos — o interesse aqui decide o que produzimos primeiro. Clique para entrar na lista de espera de qualquer um deles.</p>
+    </div>
+    <div class="soon-grid">
+      <div class="soon-card">
+        <span class="eyebrow">Nível entrada</span>
+        <h4>Introdução ao Arduino/ESP32</h4>
+        <p>Para quem nunca programou nem ligou um microcontrolador — fundamentos antes do projeto automotivo.</p>
+        <a href="https://wa.me/5584996402534?text=Quero%20ser%20avisado%20sobre%20o%20curso%20de%20Introdu%C3%A7%C3%A3o%20ao%20Arduino%2FESP32.">Quero ser avisado →</a>
+      </div>
+      <div class="soon-card">
+        <span class="eyebrow">Avançado</span>
+        <h4>RealDash a fundo</h4>
+        <p>Painéis e widgets avançados, múltiplas telas e customizações que não cabem no curso básico.</p>
+        <a href="https://wa.me/5584996402534?text=Quero%20ser%20avisado%20sobre%20o%20curso%20Avan%C3%A7ado%20de%20RealDash.">Quero ser avisado →</a>
+      </div>
+      <div class="soon-card">
+        <span class="eyebrow">Expert</span>
+        <h4>Protocolos: K-line, CAN bus e LIN bus</h4>
+        <p>Como descobrir PIDs proprietários e ler dados fora do padrão, em qualquer protocolo automotivo.</p>
+        <a href="https://wa.me/5584996402534?text=Quero%20ser%20avisado%20sobre%20o%20curso%20Expert%20de%20Protocolos%20(PIDs%20propriet%C3%A1rios).">Quero ser avisado →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Dúvidas</p>
+      <h2>Perguntas frequentes</h2>
+    </div>
+    <details>
+      <summary>Preciso saber programar?</summary>
+      <p>Não. O curso ensina exatamente o necessário para este projeto, direto no ESP32 — sem exigir experiência prévia em programação.</p>
+    </details>
+    <details>
+      <summary>Funciona em carros além de Uno e Palio?</summary>
+      <p>O método (sinal direto dos sensores + PIDs padrão via K-line) se aplica a outros veículos, mas os exemplos práticos e os projetos de referência são de Uno e Palio.</p>
+    </details>
+    <details>
+      <summary>Quanto tempo leva para terminar?</summary>
+      <p>O conteúdo é liberado ao longo de 8 dias, mas você segue no seu ritmo — o acesso continua disponível depois disso.</p>
+    </details>
+    <details>
+      <summary>Preciso comprar hardware separado?</summary>
+      <p>Sim — ESP32, cabos e conectores. A lista completa de materiais está no Módulo 3 (Conexões e Hardware), antes de qualquer compra.</p>
+    </details>
+    <details>
+      <summary>Tem garantia?</summary>
+      <p>Sim, 7 dias de garantia incondicional a partir da compra, conforme o direito de arrependimento do Código de Defesa do Consumidor para compras online.</p>
+    </details>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="price-block">
+      <div>
+        <p class="eyebrow">Painel Digital RealDash</p>
+        <h2>Pagamento único, acesso ao curso completo</h2>
+        <p class="compare">Menos que um computador de bordo pronto (R$540) — só que dessa vez o conhecimento fica com você.</p>
+        <div class="guarantee"><span class="ok-dot">✓</span> 7 dias de garantia incondicional</div>
+        <div class="guarantee"><span class="ok-dot">✓</span> Suporte direto por WhatsApp durante o curso</div>
+        <div class="guarantee"><span class="ok-dot">✓</span> Projetos reais de outros alunos como referência</div>
+      </div>
+      <div style="text-align:center;">
+        <div class="big">R$497</div>
+        <a class="btn" style="margin-top:14px;" href="https://pay.kiwify.com.br/Ua3ZJfu">Garantir minha vaga</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-grid">
+    <div>Sergyo Eletrônico · Goianinha/RN · desde 2015 modernizando painéis de Fiat Uno e Palio.</div>
+    <div style="display:flex;gap:18px;flex-wrap:wrap;">
+      <a href="https://wa.me/5584996402534">WhatsApp</a>
+      <a href="https://www.youtube.com/@sergyoeletronico">YouTube</a>
+      <a href="https://sergyoeletronico.com.br/">sergyoeletronico.com.br</a>
+    </div>
+  </div>
+</footer>
